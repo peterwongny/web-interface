@@ -27,6 +27,7 @@ repositories {
 	mavenCentral()
 }
 
+
 ext {
 	vaadinVersion = '8.1.0'
 }
@@ -47,7 +48,7 @@ dependencies {
 //	compile("org.springframework.boot:spring-boot-starter-web") {
 //        exclude module: "spring-boot-starter-tomcat"
 //    }
-}
+
 
 dependencyManagement {
 	imports {
