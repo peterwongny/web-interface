@@ -41,6 +41,8 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile("org.hibernate:hibernate-core:5.2.10.Final")
 	testCompile('org.hibernate:hibernate-validator')
+	compile 'com.github.jsimone:webapp-runner:8.5.11.3'
+	
 //	compile('org.projectlombok:lombok:1.16.2')
 //	compile("org.hsqldb:hsqldb:2.3.0")
 //	compile("org.springframework.boot:spring-boot-starter-web") {
@@ -59,5 +61,15 @@ dependencyManagement {
 }
 
 //jettyRun.webAppSourceDirectory = file("src/main/java")
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
 
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+}
 
