@@ -21,7 +21,7 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * UI content when the user is not logged in yet.
  */
-public class LoginScreen extends CssLayout {
+public class LoginScreen extends VerticalLayout {
 
     private TextField username;
     private PasswordField password;
@@ -41,20 +41,12 @@ public class LoginScreen extends CssLayout {
         // login form, centered in the available part of the screen
         Component loginForm = buildLoginForm();
 
-        // layout to center login form when there is sufficient screen space
-        // - see the theme for how this is made responsive for various screen
-        // sizes
-        VerticalLayout centeringLayout = new VerticalLayout();
-        centeringLayout.setStyleName("centering-layout");
-        centeringLayout.addComponent(loginForm);
-        centeringLayout.setComponentAlignment(loginForm,
-                Alignment.MIDDLE_CENTER);
 
-        // information text about logging in
-        CssLayout loginInformation = buildLoginInformation();
+        addComponent(loginForm);
+        
+        setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
 
-        addComponent(centeringLayout);
-        addComponent(loginInformation);
+
     }
 
     private Component buildLoginForm() {
@@ -87,27 +79,9 @@ public class LoginScreen extends CssLayout {
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         login.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
-        buttons.addComponent(forgotPassword = new Button("Forgot password?"));
-        forgotPassword.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                showNotification(new Notification("Hint: Try anything"));
-            }
-        });
-        forgotPassword.addStyleName(ValoTheme.BUTTON_LINK);
         return loginForm;
     }
 
-    private CssLayout buildLoginInformation() {
-        CssLayout loginInformation = new CssLayout();
-        loginInformation.setStyleName("login-information");
-        Label loginInfoText = new Label(
-                "<h1>Login Information</h1>"
-                        + "Log in as &quot;admin&quot; to have full access. Log in with any other username to have read-only access. For all users, any password is fine",
-                ContentMode.HTML);
-        loginInformation.addComponent(loginInfoText);
-        return loginInformation;
-    }
 
     private void login() {
         if (accessControl.signIn(username.getValue(), password.getValue())) {

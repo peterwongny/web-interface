@@ -8,19 +8,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
 
-public class TourView extends VerticalLayout implements View{
+public class BookingView extends VerticalLayout implements View{
 	private final TourRepository tourRepo;
 	
-	public final static String VIEW_NAME = "Tour List";
+	public final static String VIEW_NAME = "Booking Table";
 	
 	
 	final Grid<Tour> grid;
 	
-	public TourView(TourRepository tourRepo) {
+	public BookingView(TourRepository tourRepo) {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
-		grid.setSizeFull();
-
 	}
 	
 	@Override
