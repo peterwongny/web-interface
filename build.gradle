@@ -15,7 +15,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'jetty'
+//apply plugin: 'jetty'
 apply plugin: 'war'
 
 
@@ -33,18 +33,19 @@ ext {
 
 dependencies {
 	compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
-	compile('org.springframework.boot:spring-boot-starter-data-jpa:1.5.8.RELEASE')
-	compile('org.springframework.boot:spring-boot-starter-jdbc:1.5.8.RELEASE')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa:1.5.8.RELEASE'){
+		exclude module: "tomcat-juli"
+	}
+//	compile('org.springframework.boot:spring-boot-starter-jdbc:1.5.8.RELEASE')
 	compile('com.vaadin:vaadin-spring-boot-starter')
-	compile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile("org.hibernate:hibernate-core:5.2.10.Final")
-	compile 'com.google.guava:guava:23.3-jre'
-	testCompile 'org.hibernate:hibernate-validator'
-	compile('org.projectlombok:lombok:1.16.2')
-	compile("org.hsqldb:hsqldb:2.3.0")
-	compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
+	testCompile('org.hibernate:hibernate-validator')
+//	compile('org.projectlombok:lombok:1.16.2')
+//	compile("org.hsqldb:hsqldb:2.3.0")
+//	compile("org.springframework.boot:spring-boot-starter-web") {
+//        exclude module: "spring-boot-starter-tomcat"
+//    }
 }
 
 dependencyManagement {
@@ -53,10 +54,10 @@ dependencyManagement {
 	}
 	dependencies {
             dependency 'org.assertj:assertj-core:3.6.2'
-            dependency 'org.projectlombok:lombok:1.16.12'
+//          dependency 'org.projectlombok:lombok:1.16.12'
     }
 }
 
-test {
-    environment "DATABASE_URL", "postgres://locetwgnnlsstg:33304508ba788ee74f6ab8ecb89018571e8b0929b52cfc5bc446b04ae2149d23@ec2-54-235-102-25.compute-1.amazonaws.com:5432/d2t21jrvk8dj0i" 
-}
+//jettyRun.webAppSourceDirectory = file("src/main/java")
+
+
