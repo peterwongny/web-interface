@@ -33,7 +33,6 @@ ext {
 
 dependencies {
 	compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
-
 	compile('org.springframework.boot:spring-boot-starter-data-jpa:1.5.8.RELEASE'){
 		exclude module: "tomcat-juli"
 	}
@@ -48,7 +47,6 @@ dependencies {
 //        exclude module: "spring-boot-starter-tomcat"
 //    }
 
-
 dependencyManagement {
 	imports {
 		mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
@@ -61,6 +59,5 @@ dependencyManagement {
 }
 
 //jettyRun.webAppSourceDirectory = file("src/main/java")
-
 
 
