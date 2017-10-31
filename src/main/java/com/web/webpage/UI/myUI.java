@@ -1,6 +1,5 @@
 package com.web.webpage.UI;
 
-
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
@@ -21,7 +20,6 @@ import com.web.webpage.database.TourRepository;
 
 @SpringUI
 @Theme("valo")
-
 /**
  * Main UI class of the application that shows either the login screen or the
  * main view of the application depending on whether a user is signed in.
