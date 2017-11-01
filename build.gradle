@@ -37,7 +37,9 @@ dependencies {
 		exclude module: "tomcat-juli"
 	}
 //	compile('org.springframework.boot:spring-boot-starter-jdbc:1.5.8.RELEASE')
-	compile('com.vaadin:vaadin-spring-boot-starter')
+	compile('com.vaadin:vaadin-spring-boot-starter'){
+        exclude module: "spring-boot-starter-tomcat"
+    }
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile("org.hibernate:hibernate-core:5.2.10.Final")
 	testCompile('org.hibernate:hibernate-validator')

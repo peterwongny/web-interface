@@ -21,18 +21,18 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * UI content when the user is not logged in yet.
  */
-public class LoginScreen extends VerticalLayout {
+public class LoginScreen extends VerticalLayout{
 
     private TextField username;
     private PasswordField password;
     private Button login;
-    private Button forgotPassword;
     private AccessControl accessControl;
 
     public LoginScreen(AccessControl accessControl) {
         this.accessControl = accessControl;
         buildUI();
         username.focus();
+        //vbutton = new Button();
     }
 
     private void buildUI() {
@@ -66,16 +66,14 @@ public class LoginScreen extends VerticalLayout {
 
         buttons.addComponent(login = new Button("Login"));
         login.setDisableOnClick(true);
-        login.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
+        login.addClickListener(e-> 
+        	{
                 try {
                     login();
                 } finally {
                     login.setEnabled(true);
                 }
-            }
-        });
+            });
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         login.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
@@ -102,7 +100,7 @@ public class LoginScreen extends VerticalLayout {
     }
     
     //use its event to implement addEventListener
-    private Button vbutton = new Button();
+    protected Button vbutton = new Button();
     
     public void addEventListener(ClickListener c) {
     	vbutton.addClickListener(c);
