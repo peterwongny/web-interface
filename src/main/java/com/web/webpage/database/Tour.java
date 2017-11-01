@@ -19,19 +19,19 @@ public class Tour {
     private String description;
     
     @Column(name="duration")
-    private int duration;
+    private String duration;
     
     @Column(name="day")
     private String day;
     
     @Column(name="weekday_price")
-    private float weekday_price;
+    private String weekday_price;
     
     @Column(name="weekend_price")
-    private float weekend_price;
+    private String weekend_price;
     
     @Column(name="hits")
-    private int hits;
+    private String hits;
 
 	/**
 	 * @return the id
@@ -78,14 +78,14 @@ public class Tour {
 	/**
 	 * @return the duration
 	 */
-	public int getDuration() {
+	public String getDuration() {
 		return duration;
 	}
 
 	/**
 	 * @param duration the duration to set
 	 */
-	public void setDuration(int duration) {
+	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 
@@ -106,42 +106,42 @@ public class Tour {
 	/**
 	 * @return the weekday_price
 	 */
-	public float getWeekday_price() {
+	public String getWeekday_price() {
 		return weekday_price;
 	}
 
 	/**
 	 * @param weekday_price the weekday_price to set
 	 */
-	public void setWeekday_price(float weekday_price) {
+	public void setWeekday_price(String weekday_price) {
 		this.weekday_price = weekday_price;
 	}
 
 	/**
 	 * @return the weekend_price
 	 */
-	public float getWeekend_price() {
+	public String getWeekend_price() {
 		return weekend_price;
 	}
 
 	/**
 	 * @param weekend_price the weekend_price to set
 	 */
-	public void setWeekend_price(float weekend_price) {
+	public void setWeekend_price(String weekend_price) {
 		this.weekend_price = weekend_price;
 	}
 
 	/**
 	 * @return the hits
 	 */
-	public int getHits() {
+	public String getHits() {
 		return hits;
 	}
 
 	/**
 	 * @param hits the hits to set
 	 */
-	public void setHits(int hits) {
+	public void setHits(String hits) {
 		this.hits = hits;
 	}
     
