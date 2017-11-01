@@ -1,17 +1,13 @@
 package com.web.webpage.authentication;
 
-import java.io.Serializable;
-
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Page;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -27,12 +23,12 @@ public class LoginScreen extends VerticalLayout{
     private PasswordField password;
     private Button login;
     private AccessControl accessControl;
+    private Button vbutton = new Button();
 
     public LoginScreen(AccessControl accessControl) {
         this.accessControl = accessControl;
         buildUI();
         username.focus();
-        //vbutton = new Button();
     }
 
     private void buildUI() {
@@ -100,7 +96,6 @@ public class LoginScreen extends VerticalLayout{
     }
     
     //use its event to implement addEventListener
-    protected Button vbutton = new Button();
     
     public void addEventListener(ClickListener c) {
     	vbutton.addClickListener(c);
