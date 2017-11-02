@@ -19,19 +19,19 @@ public class Tour {
     private String description;
     
     @Column(name="duration")
-    private String duration;
+    private int duration;
     
     @Column(name="day")
     private String day;
     
     @Column(name="weekday_price")
-    private String weekday_price;
+    private int weekday_price;
     
     @Column(name="weekend_price")
-    private String weekend_price;
+    private int weekend_price;
     
     @Column(name="hits")
-    private String hits;
+    private int hits;
 
 	/**
 	 * @return the id
@@ -79,13 +79,17 @@ public class Tour {
 	 * @return the duration
 	 */
 	public String getDuration() {
-		return duration;
+		return Integer.toString(duration);
 	}
 
 	/**
 	 * @param duration the duration to set
 	 */
 	public void setDuration(String duration) {
+		setDuration(Integer.parseInt(duration));
+	}
+	
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 
@@ -107,13 +111,17 @@ public class Tour {
 	 * @return the weekday_price
 	 */
 	public String getWeekday_price() {
-		return weekday_price;
+		return Integer.toString(weekday_price);
 	}
 
 	/**
 	 * @param weekday_price the weekday_price to set
 	 */
 	public void setWeekday_price(String weekday_price) {
+		setWeekday_price(Integer.parseInt(weekday_price));
+	}
+	
+	public void setWeekday_price(int weekday_price) {
 		this.weekday_price = weekday_price;
 	}
 
@@ -121,27 +129,32 @@ public class Tour {
 	 * @return the weekend_price
 	 */
 	public String getWeekend_price() {
-		return weekend_price;
+		return Integer.toString(weekend_price);
 	}
 
 	/**
 	 * @param weekend_price the weekend_price to set
 	 */
 	public void setWeekend_price(String weekend_price) {
+		setWeekday_price(Integer.parseInt(weekend_price));
+	}
+	
+	public void setWeekend_price(int weekend_price) {
 		this.weekend_price = weekend_price;
 	}
+
 
 	/**
 	 * @return the hits
 	 */
-	public String getHits() {
+	public int getHits() {
 		return hits;
 	}
 
 	/**
 	 * @param hits the hits to set
 	 */
-	public void setHits(String hits) {
+	public void setHits(int hits) {
 		this.hits = hits;
 	}
     

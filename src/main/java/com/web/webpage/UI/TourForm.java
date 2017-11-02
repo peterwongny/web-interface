@@ -1,18 +1,14 @@
 package com.web.webpage.UI;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Tour;
-import com.web.webpage.database.TourRepository;
 
 public class TourForm extends FormLayout {
 
@@ -26,9 +22,8 @@ public class TourForm extends FormLayout {
 	
 	private Button save = new Button("Save");
 	private Button delete = new Button("Delete");
+	private Button close = new Button("Close Form");
 	
-	@Autowired
-	private TourRepository tourRepo;
 	private TourView tourView;
 	
 	private Binder<Tour> binder = new Binder<>(Tour.class);
@@ -39,8 +34,11 @@ public class TourForm extends FormLayout {
 		this.tourView = tourView;
 		
 		setSizeUndefined();
-		HorizontalLayout buttons = new HorizontalLayout(save, delete);
-		addComponents(id, name, duration, day, weekday_price, weekend_price, description, buttons);
+		HorizontalLayout buttons = new HorizontalLayout(save, delete, close);
+		HorizontalLayout row1 = new HorizontalLayout(id, name,duration, day);
+		description.setSizeFull();
+		HorizontalLayout row2 = new HorizontalLayout(weekday_price, weekend_price, description);
+		addComponents(row1, row2, buttons);
 		
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		save.setClickShortcut(KeyCode.ENTER);
@@ -49,6 +47,7 @@ public class TourForm extends FormLayout {
 		
 		save.addClickListener(e -> save());
 		delete.addClickListener(e -> delete());
+		close.addClickListener(e -> setVisible(false));
 	
 	}
 	
@@ -61,14 +60,12 @@ public class TourForm extends FormLayout {
 	}
 	
 	public void delete() {
-		tourRepo.delete(tour);
-		tourView.updateList();
+		tourView.delete(tour);
 		setVisible(false);
 	}
 	
 	public void save() {
-		tourRepo.save(tour);
-		tourView.updateList();
+		tourView.save(tour);
 		setVisible(false);
 	}
 }
