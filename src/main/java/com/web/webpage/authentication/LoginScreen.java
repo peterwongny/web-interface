@@ -1,17 +1,13 @@
 package com.web.webpage.authentication;
 
-import java.io.Serializable;
-
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.Page;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -21,13 +17,13 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * UI content when the user is not logged in yet.
  */
-public class LoginScreen extends VerticalLayout {
+public class LoginScreen extends VerticalLayout{
 
     private TextField username;
     private PasswordField password;
     private Button login;
-    private Button forgotPassword;
     private AccessControl accessControl;
+    private Button vbutton = new Button();
 
     public LoginScreen(AccessControl accessControl) {
         this.accessControl = accessControl;
@@ -66,16 +62,14 @@ public class LoginScreen extends VerticalLayout {
 
         buttons.addComponent(login = new Button("Login"));
         login.setDisableOnClick(true);
-        login.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
+        login.addClickListener(e-> 
+        	{
                 try {
                     login();
                 } finally {
                     login.setEnabled(true);
                 }
-            }
-        });
+            });
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         login.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
@@ -102,7 +96,6 @@ public class LoginScreen extends VerticalLayout {
     }
     
     //use its event to implement addEventListener
-    private Button vbutton = new Button();
     
     public void addEventListener(ClickListener c) {
     	vbutton.addClickListener(c);

@@ -1,7 +1,9 @@
 package com.web.webpage.UI;
 
-
 import javax.servlet.annotation.WebServlet;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -18,10 +20,9 @@ import com.web.webpage.authentication.LoginScreen;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
 
-
+@EnableAutoConfiguration
 @SpringUI
 @Theme("valo")
-
 /**
  * Main UI class of the application that shows either the login screen or the
  * main view of the application depending on whether a user is signed in.
@@ -34,11 +35,10 @@ public class myUI extends UI {
 
     private AccessControl accessControl = new BasicAccessControl();
     
-    public final TourRepository tourRepo;
+    @Autowired
+    public TourRepository tourRepo;
     
-    public myUI(TourRepository tourRepo) {
-		this.tourRepo = tourRepo;
-	}
+    
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -71,7 +71,7 @@ public class myUI extends UI {
         return accessControl;
     }
 
-    @WebServlet(urlPatterns = "/*", name = "MockAppUIServlet", asyncSupported = true)
+    @WebServlet(urlPatterns = "/*", name = "myUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = myUI.class, productionMode = false)
     public static class myUIServlet extends VaadinServlet {
     }
