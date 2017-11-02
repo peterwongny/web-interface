@@ -1,5 +1,7 @@
 package com.web.webpage.UI;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -17,7 +19,7 @@ import com.web.webpage.database.TourRepository;
 
 public class TourView extends VerticalLayout implements View{
 	
-	private final TourRepository tourRepo;
+	public TourRepository tourRepo;
 	private TextField filterText = new TextField();
 	private TourForm form = new TourForm(this);
 
@@ -51,7 +53,7 @@ public class TourView extends VerticalLayout implements View{
 
         HorizontalLayout toolbar = new HorizontalLayout(filtering, addTourBtn);
 
-        VerticalLayout main = new VerticalLayout(grid, form);
+        HorizontalLayout main = new HorizontalLayout(grid, form);
         main.setSizeFull();
         grid.setSizeFull();
         main.setExpandRatio(grid, 1);
@@ -81,7 +83,17 @@ public class TourView extends VerticalLayout implements View{
     }
 	
 	public void updateList() {
-	    grid.setItems(tourRepo.findAll());
+	    grid.setItems(tourRepo.findByName(filterText.getValue()));
 	    grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "hits");
+	}
+	
+	public void delete(Tour tour) {
+		tourRepo.delete(tour);
+		updateList();
+	}
+	
+	public void save(Tour tour) {
+		tourRepo.saveAndFlush(tour);
+		updateList();
 	}
 }
