@@ -21,7 +21,7 @@ public class MainScreen extends HorizontalLayout {
         viewContainer.setSizeFull();
 
         final Navigator navigator = new Navigator(ui, viewContainer);
-//        navigator.setErrorView(ErrorView.class);
+        navigator.setErrorView(ErrorView.class);
         menu = new Menu(navigator);
         
         menu.addView(new TourView(ui.tourRepo), TourView.VIEW_NAME,

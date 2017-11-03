@@ -61,7 +61,7 @@ public class TourView extends VerticalLayout implements View{
         addComponents(toolbar, main);
         
         updateList();
-
+        
         form.setVisible(false);
         
         grid.asSingleSelect().addValueChangeListener(e -> {
