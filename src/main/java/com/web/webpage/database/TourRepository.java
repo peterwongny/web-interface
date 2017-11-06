@@ -8,8 +8,8 @@ import java.util.*;
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> 
 {
-	//Iterable<Tour> findAll()
-	//Iterable<Tour> saveAll(Iterable<Tour>)
+	//List<Tour> findAll()
+	//List<Tour> saveAll(Iterable<Tour>)
 	//Tour save(Tour) 
 	//are already implemented by default
 	List<Tour> findByDescriptionContainingIgnoreCase(String name);

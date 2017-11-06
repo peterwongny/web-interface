@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Component;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
@@ -19,8 +20,12 @@ import com.web.webpage.authentication.BasicAccessControl;
 import com.web.webpage.authentication.LoginScreen;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
+//import com.web.webpage.database.BookingRepository;
+//import com.web.webpage.database.CustomerRepository;
+//import com.web.webpage.database.UnansweredEnquiriesRepository;
 
 @EnableAutoConfiguration
+@Component
 @SpringUI
 @Theme("valo")
 /**
@@ -38,6 +43,14 @@ public class myUI extends UI {
     @Autowired
     public TourRepository tourRepo;
     
+//    @Autowired
+//    public BookingRepository bookingRepo;
+//    
+//    @Autowired
+//    public CustomerRepository customerRepo;    
+//    
+//    @Autowired
+//    public UnansweredEnquiriesRepository unRepo; 
     
 
     @Override

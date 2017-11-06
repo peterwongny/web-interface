@@ -10,6 +10,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -17,11 +18,12 @@ import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
 
 
-public class TourView extends VerticalLayout implements View{
+public class TourView extends Panel implements View{
 	
 	public TourRepository tourRepo;
 	private TextField filterText = new TextField();
 	private TourForm form = new TourForm(this);
+	private VerticalLayout verticalLayout = new VerticalLayout();
 
 	public final static String VIEW_NAME = "Tour List";
 	
@@ -31,8 +33,9 @@ public class TourView extends VerticalLayout implements View{
 	public TourView(TourRepository tourRepo) {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
-		grid.setSizeFull();
+		grid.setSizeUndefined();
 		
+
 		filterText.setPlaceholder("filter by name...");
         filterText.addValueChangeListener(e -> updateList());
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
@@ -48,7 +51,7 @@ public class TourView extends VerticalLayout implements View{
         Button addTourBtn = new Button("Add new tour");
         addTourBtn.addClickListener(e -> {
         	grid.asSingleSelect().clear();
-        	form.setCustomer(new Tour());
+        	form.setTour(new Tour());
         });
 
         HorizontalLayout toolbar = new HorizontalLayout(filtering, addTourBtn);
@@ -58,7 +61,7 @@ public class TourView extends VerticalLayout implements View{
         grid.setSizeFull();
         main.setExpandRatio(grid, 1);
         
-        addComponents(toolbar, main);
+        verticalLayout.addComponents(toolbar, main);
         
         updateList();
         
@@ -69,7 +72,7 @@ public class TourView extends VerticalLayout implements View{
         		form.setVisible(false);
         	}
         	else {
-        		form.setCustomer(e.getValue());
+        		form.setTour(e.getValue());
         	}
         });
 
@@ -79,7 +82,8 @@ public class TourView extends VerticalLayout implements View{
 	@Override
     public void enter(ViewChangeEvent event) {
 		updateList();
-		addComponent(grid);
+		verticalLayout.addComponent(grid);
+		setContent(verticalLayout);
     }
 	
 	public void updateList() {

@@ -51,7 +51,7 @@ public class TourForm extends FormLayout {
 	
 	}
 	
-	public void setCustomer(Tour tour) {
+	public void setTour(Tour tour) {
 		this.tour = tour;
 		binder.setBean(tour);
 		
