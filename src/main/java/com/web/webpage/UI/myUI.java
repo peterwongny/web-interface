@@ -3,6 +3,7 @@ package com.web.webpage.UI;
 import javax.servlet.annotation.WebServlet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ import com.web.webpage.database.TourRepository;
 //import com.web.webpage.database.CustomerRepository;
 //import com.web.webpage.database.UnansweredEnquiriesRepository;
 
-@EnableAutoConfiguration
+
 @Component
 @SpringUI
 @Theme("valo")
@@ -43,6 +44,9 @@ public class myUI extends UI {
     @Autowired
     public TourRepository tourRepo;
     
+    
+    MainScreen mainscreen;
+    
 //    @Autowired
 //    public BookingRepository bookingRepo;
 //    
@@ -51,10 +55,12 @@ public class myUI extends UI {
 //    
 //    @Autowired
 //    public UnansweredEnquiriesRepository unRepo; 
+   
     
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+    	
         Responsive.makeResponsive(this);
         setLocale(vaadinRequest.getLocale());
         getPage().setTitle("TourCompany");

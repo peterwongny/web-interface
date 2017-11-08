@@ -3,6 +3,8 @@ package com.web.webpage.UI;
 
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -10,6 +12,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Tour;
 
+
+@ViewScope
 public class TourForm extends FormLayout {
 
 	private TextField id = new TextField("Id");

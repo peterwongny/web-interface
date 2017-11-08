@@ -6,6 +6,9 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.ValueChangeMode;
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
@@ -17,7 +20,9 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
 
-
+@SpringView(name = TourView.VIEW_NAME)
+@SpringComponent
+@UIScope
 public class TourView extends Panel implements View{
 	
 	public TourRepository tourRepo;
@@ -29,7 +34,7 @@ public class TourView extends Panel implements View{
 	
 	
 	final Grid<Tour> grid;
-	
+
 	public TourView(TourRepository tourRepo) {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
@@ -88,7 +93,7 @@ public class TourView extends Panel implements View{
 	
 	public void updateList() {
 	    grid.setItems(tourRepo.findByName(filterText.getValue()));
-	    grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "hits");
+	    grid.setColumnOrder("id", "name", "duration", "day", "weekday_price", "weekend_price", "description", "hits");
 	}
 	
 	public void delete(Tour tour) {

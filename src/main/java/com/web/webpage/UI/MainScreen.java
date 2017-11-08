@@ -1,18 +1,28 @@
 package com.web.webpage.UI;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
+
+@SpringComponent
+@UIScope
 public class MainScreen extends HorizontalLayout {
 	
 	
     private Menu menu;
-    
+
+    public myUI ui;
 
     public MainScreen(myUI ui) {
+    	
 
         setStyleName("main-screen");
 
