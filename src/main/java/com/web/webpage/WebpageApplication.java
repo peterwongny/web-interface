@@ -9,9 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan
-@Configurable
 public class WebpageApplication  {
 
 	public static void main(String[] args) {
