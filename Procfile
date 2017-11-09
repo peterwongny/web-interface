@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar build/libs/web-interface.war
+web: java -jar build/libs/web-interface.war
