@@ -46,9 +46,6 @@ public class Menu extends CssLayout {
         Label title = new Label("cs7s");
         title.addStyleName(ValoTheme.LABEL_H3);
         title.setSizeUndefined();
-        Image image = new Image(null, new ThemeResource("img/table-logo.png"));
-        image.setStyleName("logo");
-        top.addComponent(image);
         top.addComponent(title);
         menuPart.addComponent(top);
 

@@ -62,8 +62,8 @@ public class myUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
     	
         Responsive.makeResponsive(this);
-        setLocale(vaadinRequest.getLocale());
-        getPage().setTitle("TourCompany");
+//        setLocale(vaadinRequest.getLocale());
+//        getPage().setTitle("TourCompany");
         if (!accessControl.isUserSignedIn()) {
         	
         	LoginScreen loginScreen = new LoginScreen(accessControl);
@@ -90,8 +90,8 @@ public class myUI extends UI {
         return accessControl;
     }
 
-    @WebServlet(urlPatterns = "/*", name = "myUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = myUI.class, productionMode = true)
+    @WebServlet(urlPatterns={"/**","/VAADIN/*"}, asyncSupported = true)
+    @VaadinServletConfiguration(ui = myUI.class, productionMode = false)
     public static class myUIServlet extends VaadinServlet {
     }
 
