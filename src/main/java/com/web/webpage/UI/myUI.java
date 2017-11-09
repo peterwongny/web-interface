@@ -92,7 +92,7 @@ public class myUI extends UI {
         return accessControl;
     }
 
-    @WebServlet(urlPatterns={"/**","/VAADIN/*"}, asyncSupported = true)
+    @WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
     @VaadinServletConfiguration(ui = myUI.class, productionMode = false)
     public static class myUIServlet extends VaadinServlet {
     }

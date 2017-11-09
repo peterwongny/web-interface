@@ -39,6 +39,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.vaadin:vaadin-spring-boot-starter")
     compile("com.h2database:h2")
+    compile("org.springframework.boot:spring-boot-starter-web") 
+    
 //    compile group: 'ru.xpoft.vaadin', name: 'spring-vaadin-integration'
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
