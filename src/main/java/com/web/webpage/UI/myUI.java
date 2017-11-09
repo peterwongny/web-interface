@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.vaadin.annotations.Theme;
@@ -27,6 +28,7 @@ import com.web.webpage.database.TourRepository;
 
 
 @Component
+@Scope("prototype")
 @SpringUI
 @Theme("valo")
 /**
@@ -62,8 +64,8 @@ public class myUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
     	
         Responsive.makeResponsive(this);
-//        setLocale(vaadinRequest.getLocale());
-//        getPage().setTitle("TourCompany");
+        setLocale(vaadinRequest.getLocale());
+        getPage().setTitle("TourCompany");
         if (!accessControl.isUserSignedIn()) {
         	
         	LoginScreen loginScreen = new LoginScreen(accessControl);
