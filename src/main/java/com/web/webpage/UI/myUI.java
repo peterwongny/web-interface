@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Responsive;
@@ -27,8 +28,9 @@ import com.web.webpage.database.TourRepository;
 //import com.web.webpage.database.UnansweredEnquiriesRepository;
 
 
+
 @Component
-@Scope("prototype")
+
 @SpringUI
 @Theme("valo")
 /**
@@ -46,6 +48,7 @@ public class myUI extends UI {
     @Autowired
     public TourRepository tourRepo;
     
+
     
     MainScreen mainscreen;
     
@@ -58,7 +61,7 @@ public class myUI extends UI {
 //    @Autowired
 //    public UnansweredEnquiriesRepository unRepo; 
    
-    
+
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -93,6 +96,7 @@ public class myUI extends UI {
     }
 
     @WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
+
     @VaadinServletConfiguration(ui = myUI.class, productionMode = false)
     public static class myUIServlet extends VaadinServlet {
     }

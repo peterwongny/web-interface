@@ -37,10 +37,12 @@ public class MainScreen extends HorizontalLayout {
         menu.addView(new TourView(ui.tourRepo), TourView.VIEW_NAME,
                 TourView.VIEW_NAME, FontAwesome.EDIT);
         
+
 //        menu.addView(new BookingView(ui.bookingRepo), BookingView.VIEW_NAME,
 //                BookingView.VIEW_NAME, FontAwesome.EDIT);
 //        
 //        menu.addView(new CustomerView(ui.customerRepo), CustomerView.VIEW_NAME,
+
 //                CustomerView.VIEW_NAME, FontAwesome.EDIT);
         
         menu.addView(new ReportView(), ReportView.VIEW_NAME,

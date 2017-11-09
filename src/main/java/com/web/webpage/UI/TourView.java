@@ -14,21 +14,25 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
 
+
 @SpringView(name = TourView.VIEW_NAME)
 @SpringComponent
 @UIScope
 public class TourView extends Panel implements View{
+
 	
 	public TourRepository tourRepo;
 	private TextField filterText = new TextField();
 	private TourForm form = new TourForm(this);
 	private VerticalLayout verticalLayout = new VerticalLayout();
+
 
 	public final static String VIEW_NAME = "Tour List";
 	
@@ -78,6 +82,7 @@ public class TourView extends Panel implements View{
         	}
         	else {
         		form.setTour(e.getValue());
+
         	}
         });
 
@@ -89,6 +94,7 @@ public class TourView extends Panel implements View{
 		updateList();
 		verticalLayout.addComponent(grid);
 		setContent(verticalLayout);
+
     }
 	
 	public void updateList() {
@@ -105,4 +111,5 @@ public class TourView extends Panel implements View{
 		tourRepo.saveAndFlush(tour);
 		updateList();
 	}
+
 }

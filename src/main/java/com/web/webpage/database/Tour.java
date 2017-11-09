@@ -137,6 +137,7 @@ public class Tour {
 	 */
 	public void setWeekend_price(String weekend_price) {
 		setWeekend_price(Integer.parseInt(weekend_price));
+
 	}
 	
 	public void setWeekend_price(int weekend_price) {

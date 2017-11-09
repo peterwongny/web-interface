@@ -14,6 +14,7 @@ import com.web.webpage.database.Tour;
 
 
 @ViewScope
+
 public class TourForm extends FormLayout {
 
 	private TextField id = new TextField("Id");
@@ -56,6 +57,7 @@ public class TourForm extends FormLayout {
 	}
 	
 	public void setTour(Tour tour) {
+
 		this.tour = tour;
 		binder.setBean(tour);
 		

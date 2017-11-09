@@ -120,6 +120,7 @@ dependencyManagement {
 }
 
 //jettyRun.webAppSourceDirectory = file("src/main/java")
+
 //task stage() {
 //    dependsOn clean, war
 //}
@@ -153,4 +154,18 @@ stage.dependsOn(copyToLib)
 //}
 
 */
+/*
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
 
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+}
+
+stage.dependsOn(copyToLib)
+*/
