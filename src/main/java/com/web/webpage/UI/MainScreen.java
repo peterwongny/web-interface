@@ -1,18 +1,28 @@
 package com.web.webpage.UI;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
+
+@SpringComponent
+@UIScope
 public class MainScreen extends HorizontalLayout {
 	
 	
     private Menu menu;
-    
+
+    public myUI ui;
 
     public MainScreen(myUI ui) {
+    	
 
         setStyleName("main-screen");
 
@@ -21,16 +31,18 @@ public class MainScreen extends HorizontalLayout {
         viewContainer.setSizeFull();
 
         final Navigator navigator = new Navigator(ui, viewContainer);
-//        navigator.setErrorView(ErrorView.class);
+        navigator.setErrorView(ErrorView.class);
         menu = new Menu(navigator);
         
         menu.addView(new TourView(ui.tourRepo), TourView.VIEW_NAME,
                 TourView.VIEW_NAME, FontAwesome.EDIT);
         
-//        menu.addView(new BookingView(), BookingView.VIEW_NAME,
+
+//        menu.addView(new BookingView(ui.bookingRepo), BookingView.VIEW_NAME,
 //                BookingView.VIEW_NAME, FontAwesome.EDIT);
 //        
-//        menu.addView(new CustomerView(), CustomerView.VIEW_NAME,
+//        menu.addView(new CustomerView(ui.customerRepo), CustomerView.VIEW_NAME,
+
 //                CustomerView.VIEW_NAME, FontAwesome.EDIT);
         
         menu.addView(new ReportView(), ReportView.VIEW_NAME,
