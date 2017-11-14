@@ -1,7 +1,9 @@
-package com.web.webpage.UI;
+package com.web.webpage.UI.tourList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.gridutil.cell.GridCellFilter;
 
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -17,6 +19,7 @@ import com.vaadin.ui.Panel;
 
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.components.grid.HeaderRow;
 import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
@@ -29,7 +32,6 @@ public class TourView extends Panel implements View{
 
 	
 	public TourRepository tourRepo;
-	private TextField filterText = new TextField();
 	private TourForm form = new TourForm(this);
 	private VerticalLayout verticalLayout = new VerticalLayout();
 
@@ -37,43 +39,47 @@ public class TourView extends Panel implements View{
 	public final static String VIEW_NAME = "Tour List";
 	
 	
-	final Grid<Tour> grid;
+	private final Grid<Tour> grid;
+	private ListDataProvider<Tour> provider;
 
 	public TourView(TourRepository tourRepo) {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
 		grid.setSizeUndefined();
+		updateList();
+	    grid.setColumnOrder("id", "name", "duration", "day", "weekday_price", "weekend_price", "description", "hits");
+
 		
-
-		filterText.setPlaceholder("filter by name...");
-        filterText.addValueChangeListener(e -> updateList());
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
-
-        Button clearFilterTextBtn = new Button(VaadinIcons.CLOSE);
-        clearFilterTextBtn.setDescription("Clear the current filter");
-        clearFilterTextBtn.addClickListener(e -> filterText.clear());
-        
-        CssLayout filtering = new CssLayout();
-        filtering.addComponents(filterText, clearFilterTextBtn);
-        filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+		
+		//filter
+		final GridCellFilter<Tour> filter = new GridCellFilter<>(this.grid, Tour.class);
+		filter.setTextFilter("id",true,false);
+		filter.setTextFilter("name", true, false);
+		filter.setTextFilter("duration", true, true);
+		filter.setTextFilter("day", true, false);
+		filter.setTextFilter("weekday_price", true, true);
+		filter.setTextFilter("weekend_price", true, true);
+		filter.setTextFilter("description", true, false);
+		filter.setNumberFilter("hits", Integer.class);
+		
+		        
 
         Button addTourBtn = new Button("Add new tour");
         addTourBtn.addClickListener(e -> {
         	grid.asSingleSelect().clear();
         	form.setTour(new Tour());
+        	setSizeFull();
         });
 
-        HorizontalLayout toolbar = new HorizontalLayout(filtering, addTourBtn);
+        HorizontalLayout toolbar = new HorizontalLayout(addTourBtn);
 
         HorizontalLayout main = new HorizontalLayout(grid, form);
         main.setSizeFull();
         grid.setSizeFull();
-        main.setExpandRatio(grid, 1);
+        grid.setHeightByRows(10);
         
         verticalLayout.addComponents(toolbar, main);
-        
-        updateList();
-        
+                
         form.setVisible(false);
         
         grid.asSingleSelect().addValueChangeListener(e -> {
@@ -82,7 +88,7 @@ public class TourView extends Panel implements View{
         	}
         	else {
         		form.setTour(e.getValue());
-
+        		setSizeFull();
         	}
         });
 
@@ -96,10 +102,10 @@ public class TourView extends Panel implements View{
 		setContent(verticalLayout);
 
     }
-	
+
 	public void updateList() {
-	    grid.setItems(tourRepo.findByName(filterText.getValue()));
-	    grid.setColumnOrder("id", "name", "duration", "day", "weekday_price", "weekend_price", "description", "hits");
+		provider = new ListDataProvider<>(tourRepo.findAll());	
+		grid.setDataProvider(provider);
 	}
 	
 	public void delete(Tour tour) {

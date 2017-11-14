@@ -1,7 +1,8 @@
-package com.web.webpage.UI;
+package com.web.webpage.UI.tourList;
 
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.spring.annotation.ViewScope;

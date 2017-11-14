@@ -23,8 +23,8 @@ import com.web.webpage.authentication.BasicAccessControl;
 import com.web.webpage.authentication.LoginScreen;
 import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
-//import com.web.webpage.database.BookingRepository;
-//import com.web.webpage.database.CustomerRepository;
+import com.web.webpage.database.BookingRepository;
+import com.web.webpage.database.CustomerRepository;
 //import com.web.webpage.database.UnansweredEnquiriesRepository;
 
 
@@ -52,12 +52,12 @@ public class myUI extends UI {
     
     MainScreen mainscreen;
     
-//    @Autowired
-//    public BookingRepository bookingRepo;
-//    
-//    @Autowired
-//    public CustomerRepository customerRepo;    
-//    
+    @Autowired
+    public BookingRepository bookingRepo;
+    
+    @Autowired
+    public CustomerRepository customerRepo;    
+    
 //    @Autowired
 //    public UnansweredEnquiriesRepository unRepo; 
    

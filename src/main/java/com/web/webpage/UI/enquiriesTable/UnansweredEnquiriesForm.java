@@ -1,3 +1,4 @@
+package com.web.webpage.UI.enquiriesTable;
 //package com.web.webpage.UI;
 //
 //

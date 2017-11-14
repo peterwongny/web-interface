@@ -1,3 +1,4 @@
+package com.web.webpage.UI.enquiriesTable;
 //package com.web.webpage.UI;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +15,25 @@
 //import com.vaadin.ui.TextField;
 //import com.vaadin.ui.VerticalLayout;
 //import com.vaadin.ui.themes.ValoTheme;
-//import com.web.webpage.database.Customer;
-//import com.web.webpage.database.CustomerRepository;
+//import com.web.webpage.database.UnansweredEnquiries;
+//import com.web.webpage.database.UnansweredEnquiriesRepository;
 //
 //
-//public class CustomerView extends Panel implements View{
+//public class UnansweredEnquiriesView extends Panel implements View{
 //	
-//	public CustomerRepository customerRepo;
+//	public UnansweredEnquiriesRepository unRepo;
 //	private TextField filterText = new TextField();
-//	private CustomerForm form = new CustomerForm(this);
+//	private UnansweredEnquiriesForm form = new UnansweredEnquiriesForm(this);
 //	private VerticalLayout verticalLayout = new VerticalLayout();
 //
-//	public final static String VIEW_NAME = "Customer List";
+//	public final static String VIEW_NAME = "Unanswered Enquiries";
 //	
 //	
-//	final Grid<Customer> grid;
+//	final Grid<UnansweredEnquiries> grid;
 //	
-//	public CustomerView(CustomerRepository customerRepo) {
-//		this.customerRepo = customerRepo;
-//		this.grid = new Grid<>(Customer.class);
+//	public UnansweredEnquiriesView(UnansweredEnquiriesRepository unRepo) {
+//		this.unRepo = unRepo;
+//		this.grid = new Grid<>(UnansweredEnquiries.class);
 //		grid.setSizeUndefined();
 //		
 //
@@ -48,13 +49,13 @@
 //        filtering.addComponents(filterText, clearFilterTextBtn);
 //        filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 //
-//        Button addCustomerBtn = new Button("Add new customer");
-//        addCustomerBtn.addClickListener(e -> {
+//        Button addTourBtn = new Button("Add new tour");
+//        addTourBtn.addClickListener(e -> {
 //        	grid.asSingleSelect().clear();
-//        	form.setCustomer(new Customer());
+//        	form.setUnansweredEnquiries(new UnansweredEnquiries());
 //        });
 //
-//        HorizontalLayout toolbar = new HorizontalLayout(filtering, addCustomerBtn);
+//        HorizontalLayout toolbar = new HorizontalLayout(filtering, addTourBtn);
 //
 //        HorizontalLayout main = new HorizontalLayout(grid, form);
 //        main.setSizeFull();
@@ -72,7 +73,7 @@
 //        		form.setVisible(false);
 //        	}
 //        	else {
-//        		form.setCustomer(e.getValue());
+//        		form.setUnansweredEnquiries(e.getValue());
 //        	}
 //        });
 //
@@ -87,17 +88,17 @@
 //    }
 //	
 //	public void updateList() {
-//	    grid.setItems(customerRepo.findAll());
+//	    grid.setItems(unRepo.findAll());
 //	    grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "hits");
 //	}
 //	
-//	public void delete(Customer customer) {
-//		customerRepo.delete(customer);
+//	public void delete(UnansweredEnquiries un) {
+//		unRepo.delete(un);
 //		updateList();
 //	}
 //	
-//	public void save(Customer customer) {
-//		customerRepo.saveAndFlush(customer);
+//	public void save(UnansweredEnquiries un) {
+//		unRepo.saveAndFlush(un);
 //		updateList();
 //	}
 //}

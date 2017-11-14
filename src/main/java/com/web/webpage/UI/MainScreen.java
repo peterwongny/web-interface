@@ -10,6 +10,11 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.web.webpage.UI.bookingTable.BookingView;
+import com.web.webpage.UI.customerTable.CustomerView;
+import com.web.webpage.UI.promotion.PromotionView;
+import com.web.webpage.UI.report.ReportView;
+import com.web.webpage.UI.tourList.TourView;
 
 
 @SpringComponent
@@ -38,12 +43,18 @@ public class MainScreen extends HorizontalLayout {
                 TourView.VIEW_NAME, FontAwesome.EDIT);
         
 
-//        menu.addView(new BookingView(ui.bookingRepo), BookingView.VIEW_NAME,
-//                BookingView.VIEW_NAME, FontAwesome.EDIT);
-//        
-//        menu.addView(new CustomerView(ui.customerRepo), CustomerView.VIEW_NAME,
-
-//                CustomerView.VIEW_NAME, FontAwesome.EDIT);
+        menu.addView(new BookingView(ui.bookingRepo), BookingView.VIEW_NAME,
+                BookingView.VIEW_NAME, FontAwesome.EDIT);
+        
+        menu.addView(new CustomerView(ui.customerRepo), CustomerView.VIEW_NAME,
+                CustomerView.VIEW_NAME, FontAwesome.EDIT);
+        
+//        menu.addView(new UnansweredEnquiriesView(ui.unRepo), UnansweredEnquiriesView.VIEW_NAME,
+//        		UnansweredEnquiriesView.VIEW_NAME, FontAwesome.EDIT);
+        
+        menu.addView(new PromotionView(), PromotionView.VIEW_NAME,
+                PromotionView.VIEW_NAME, FontAwesome.EDIT);
+        
         
         menu.addView(new ReportView(), ReportView.VIEW_NAME,
         ReportView.VIEW_NAME, FontAwesome.EDIT);
