@@ -14,6 +14,12 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Booking;
 import com.web.webpage.database.BookingStatus;
 
+
+/**
+ * form provided to edit the information of an booking entity in the table
+ * @author Wong Ngo Yin
+ *
+ */
 public class BookingForm extends FormLayout {
 
 	private TextField booking_id = new TextField("booking_id");
@@ -39,6 +45,10 @@ public class BookingForm extends FormLayout {
 //	binder.forField(duration).withConverter(new StringToIntegerConverter("Must enter a number")).bind(Booking::getDuration, Booking::setDuration);
 	private Booking booking;
 	
+	/**
+	 * constructor of BookingForm
+	 * @param bookingView
+	 */
 	public BookingForm(BookingView bookingView) {
 		this.bookingView = bookingView;
 		
@@ -62,7 +72,10 @@ public class BookingForm extends FormLayout {
 		close.addClickListener(e -> setVisible(false));
 	
 	}
-	
+	/**
+	 * set the form bind to the booking entity provided
+	 * @param booking
+	 */
 	public void setBooking(Booking booking) {
 		this.booking = booking;
 		binder.setBean(booking);
@@ -71,12 +84,12 @@ public class BookingForm extends FormLayout {
 		booking_id.selectAll();
 	}
 	
-	public void delete() {
+	private void delete() {
 		bookingView.delete(booking);
 		setVisible(false);
 	}
 	
-	public void save() {
+	private void save() {
 		bookingView.save(booking);
 		setVisible(false);
 	}

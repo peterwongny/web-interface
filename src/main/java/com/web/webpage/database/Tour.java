@@ -6,6 +6,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 
+
+/**
+ * tour entity that exist in the database
+ * @author Wong Ngo Yin
+ *
+ */
 @Entity //refering to the type of record in a table
 @Table(name = "tour_list")
 public class Tour {

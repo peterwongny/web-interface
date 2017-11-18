@@ -1,8 +1,12 @@
 package com.web.webpage.UI.tourList;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.gridutil.cell.GridCellFilter;
 
+import com.vaadin.data.provider.CallbackDataProvider;
+import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
@@ -28,6 +32,12 @@ import com.web.webpage.database.TourRepository;
 @SpringView(name = TourView.VIEW_NAME)
 @SpringComponent
 @UIScope
+
+/**
+ * the page that show tour table, you can edit and search the table in this page
+ * @author Wong Ngo Yin
+ *
+ */
 public class TourView extends Panel implements View{
 
 	
@@ -40,16 +50,24 @@ public class TourView extends Panel implements View{
 	
 	
 	private final Grid<Tour> grid;
-	private ListDataProvider<Tour> provider;
-
+	final ListDataProvider<Tour> provider;
+	
+	private List<Tour> tourlist;
+	
+	/**
+	 * constructor of TourView 
+	 * @param tourRepo
+	 */
 	public TourView(TourRepository tourRepo) {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
 		grid.setSizeUndefined();
-		updateList();
 	    grid.setColumnOrder("id", "name", "duration", "day", "weekday_price", "weekend_price", "description", "hits");
 
-		
+	    tourlist = tourRepo.findAll();
+	    provider = new ListDataProvider<>(tourlist);	
+		grid.setDataProvider(provider);
+		updateList();
 		
 		//filter
 		final GridCellFilter<Tour> filter = new GridCellFilter<>(this.grid, Tour.class);
@@ -95,6 +113,11 @@ public class TourView extends Panel implements View{
 
 	}
 	
+	/**
+	 * entry point when user select this page, update the table
+	 * 
+	 * @param ViewChangeEvent
+	 */
 	@Override
     public void enter(ViewChangeEvent event) {
 		updateList();
@@ -102,17 +125,28 @@ public class TourView extends Panel implements View{
 		setContent(verticalLayout);
 
     }
-
+	/**
+	 * update the table base on the tour table in the database
+	 */
 	public void updateList() {
-		provider = new ListDataProvider<>(tourRepo.findAll());	
-		grid.setDataProvider(provider);
+		tourlist.clear();
+		tourlist.addAll(tourRepo.findAll());
+		provider.refreshAll();
 	}
 	
+	/**
+	 * delete a tour entity from the tour table in the database
+	 * @param tour
+	 */
 	public void delete(Tour tour) {
 		tourRepo.delete(tour);
 		updateList();
 	}
 	
+	/**
+	 * update or insert a tour entity from the tour table in the database
+	 * @param tour
+	 */
 	public void save(Tour tour) {
 		tourRepo.saveAndFlush(tour);
 		updateList();

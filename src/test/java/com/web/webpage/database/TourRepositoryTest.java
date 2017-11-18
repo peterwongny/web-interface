@@ -40,8 +40,8 @@ import java.util.*;
 @AutoConfigureTestDatabase(replace=Replace.NONE) //uses our psql db
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@SpringBootTest(classes = { OrmTest.class, Tour.class })
-	public class OrmTest {
+@SpringBootTest(classes = { TourRepositoryTest.class, Tour.class })
+	public class TourRepositoryTest {
         
 		@Autowired
         private TourRepository tourRepo;

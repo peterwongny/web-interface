@@ -5,6 +5,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 
+/**
+ * tour repository that perform query, insert, update the database tour table
+ * @author Wong Ngo Yin
+ *
+ */
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> 
 {

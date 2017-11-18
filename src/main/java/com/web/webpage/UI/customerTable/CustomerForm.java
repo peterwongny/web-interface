@@ -10,6 +10,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import com.web.webpage.database.Customer;
 
+/**
+ * custoemr form for users to edit customer object
+ * @author Wong Ngo Yin
+ *
+ */
 public class CustomerForm extends FormLayout {
 
 	private TextField name = new TextField("name");
@@ -35,6 +40,10 @@ public class CustomerForm extends FormLayout {
 //	binder.forField(duration).withConverter(new StringToIntegerConverter("Must enter a number")).bind(Customer::getDuration, Customer::setDuration);
 	private Customer customer;
 	
+	/**
+	 * constructor of CustomerForm
+	 * @param customerView
+	 */
 	public CustomerForm(CustomerView customerView) {
 		this.customerView = customerView;
 		
@@ -55,7 +64,10 @@ public class CustomerForm extends FormLayout {
 		close.addClickListener(e -> setVisible(false));
 	
 	}
-	
+	/**
+	 * bind the customer entity provided to the form
+	 * @param customer
+	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 		binder.setBean(customer);
@@ -64,12 +76,12 @@ public class CustomerForm extends FormLayout {
 		name.selectAll();
 	}
 	
-	public void delete() {
+	private void delete() {
 		customerView.delete(customer);
 		setVisible(false);
 	}
 	
-	public void save() {
+	private void save() {
 		customerView.save(customer);
 		setVisible(false);
 	}

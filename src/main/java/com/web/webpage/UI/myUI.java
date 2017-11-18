@@ -37,9 +37,6 @@ import com.web.webpage.database.CustomerRepository;
  * Main UI class of the application that shows either the login screen or the
  * main view of the application depending on whether a user is signed in.
  *
- * The @Viewport annotation configures the viewport meta tags appropriately on
- * mobile devices. Instead of device based scaling (default), using responsive
- * layouts.
  */
 public class myUI extends UI {
 
@@ -86,11 +83,17 @@ public class myUI extends UI {
         setContent(new MainScreen(myUI.this));
         getNavigator().navigateTo(getNavigator().getState());
     }
-
+    /**
+     * get current ui
+     * @return myUI
+     */
     public static myUI get() {
         return (myUI) UI.getCurrent();
     }
-
+    /**
+     * return a accessControl of managing authentication issue
+     * @return accessControl
+     */
     public AccessControl getAccessControl() {
         return accessControl;
     }

@@ -1,8 +1,12 @@
 package com.web.webpage.UI.customerTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.gridutil.cell.GridCellFilter;
 
+import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
@@ -20,7 +24,11 @@ import com.web.webpage.database.Customer;
 import com.web.webpage.database.CustomerRepository;
 import com.web.webpage.database.Customer;
 
-
+/**
+ * the page that show customer table, you can edit and search the table in this page
+ * @author Wong Ngo Yin
+ *
+ */
 public class CustomerView extends Panel implements View{
 	
 	public CustomerRepository customerRepo;
@@ -32,13 +40,22 @@ public class CustomerView extends Panel implements View{
 	
 	final Grid<Customer> grid;
 	private ListDataProvider<Customer> provider;
+	private List<Customer> customerTable;
 	
+	/**
+	 * constructor of CustomerView
+	 * @param customerRepo
+	 */
 	public CustomerView(CustomerRepository customerRepo) {
 		this.customerRepo = customerRepo;
 		this.grid = new Grid<>(Customer.class);
 		grid.setSizeUndefined();
-		updateList();
+		customerTable = customerRepo.findAll();
+		provider = new ListDataProvider<>(customerRepo.findAll());
+		grid.setDataProvider(provider);
 		grid.setColumnOrder("cust_id", "name", "age", "phone", "line_id", "tour_joined", "adult_num", "children_num", "toddler_num", "fee", "amt_paid", "special_req");
+		updateList();
+		
 		
 		//filter
 		final GridCellFilter<Customer> filter = new GridCellFilter<>(this.grid, Customer.class);
@@ -88,6 +105,12 @@ public class CustomerView extends Panel implements View{
 
 	}
 	
+	/**
+	 * indicate and update the view when customer enter this page
+	 * entry point when users choose this page to be shown
+	 * 
+	 * @param ViewChangeEvent
+	 */
 	@Override
     public void enter(ViewChangeEvent event) {
 		updateList();
@@ -95,16 +118,28 @@ public class CustomerView extends Panel implements View{
 		setContent(verticalLayout);
     }
 	
+	/**
+	 * update the table base on the data in the database
+	 */
 	public void updateList() {
-		provider = new ListDataProvider<>(customerRepo.findAll());
-		grid.setDataProvider(provider);
+		customerTable.clear();
+		customerTable.addAll(customerRepo.findAll());
+		provider.refreshAll();
 	}
 	
+	/**
+	 * delete a customer entity from the customer table in the database
+	 * @param customer
+	 */
 	public void delete(Customer customer) {
 		customerRepo.delete(customer);
 		updateList();
 	}
 	
+	/**
+	 * update or insert and custoemr entity to the custoemr table in database
+	 * @param customer
+	 */
 	public void save(Customer customer) {
 		customerRepo.saveAndFlush(customer);
 		updateList();

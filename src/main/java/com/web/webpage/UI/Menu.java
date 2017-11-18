@@ -21,6 +21,15 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.themes.ValoTheme;
 
+
+/**
+ * Menu of the website that provide ability to change different views
+ *
+ * 
+ * 
+ * @author Wong Ngo Yin
+ *
+ */
 public class Menu extends CssLayout {
 
     private static final String VALO_MENUITEMS = "valo-menuitems";
@@ -32,6 +41,12 @@ public class Menu extends CssLayout {
     private CssLayout menuItemsLayout;
     private CssLayout menuPart;
 
+    
+    /**
+     * constructor of class menu
+     * 
+     * @param navigator
+     */
     public Menu(Navigator navigator) {
         this.navigator = navigator;
         setPrimaryStyleName(ValoTheme.MENU_ROOT);
@@ -123,6 +138,8 @@ public class Menu extends CssLayout {
      *            view caption in the menu
      * @param icon
      *            view icon in the menu
+     *            
+     *
      */
     public void addView(Class<? extends View> viewClass, final String name,
             String caption, Resource icon) {

@@ -9,6 +9,12 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 
+
+/**
+ * customer entity that exist in the database
+ * @author Wong Ngo Yin
+ *
+ */
 @Entity //refering to the type of record in a table
 @Table(name = "customer_table")
 public class Customer {

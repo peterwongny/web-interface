@@ -15,7 +15,11 @@ import com.web.webpage.database.Tour;
 
 
 @ViewScope
-
+/**
+ * a form that show the information of a tour entity so user can edit
+ * @author Wong Ngo Yin
+ *
+ */
 public class TourForm extends FormLayout {
 
 	private TextField id = new TextField("Id");
@@ -57,6 +61,10 @@ public class TourForm extends FormLayout {
 	
 	}
 	
+	/**
+	 * bind the form to the tour entity provided
+	 * @param tour
+	 */
 	public void setTour(Tour tour) {
 
 		this.tour = tour;
@@ -66,12 +74,12 @@ public class TourForm extends FormLayout {
 		id.selectAll();
 	}
 	
-	public void delete() {
+	private void delete() {
 		tourView.delete(tour);
 		setVisible(false);
 	}
 	
-	public void save() {
+	private void save() {
 		tourView.save(tour);
 		setVisible(false);
 	}

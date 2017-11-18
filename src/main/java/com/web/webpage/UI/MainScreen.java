@@ -17,6 +17,14 @@ import com.web.webpage.UI.report.ReportView;
 import com.web.webpage.UI.tourList.TourView;
 
 
+/**
+ * the screen that is shown after login 
+ * 
+ * consist of menu and the view shown
+ * @author Wong Ngo Yin
+ *
+ */
+
 @SpringComponent
 @UIScope
 public class MainScreen extends HorizontalLayout {
@@ -26,6 +34,10 @@ public class MainScreen extends HorizontalLayout {
 
     public myUI ui;
 
+    /**
+     * constructt of MainScreen
+     * @param ui
+     */
     public MainScreen(myUI ui) {
     	
 
@@ -70,12 +82,13 @@ public class MainScreen extends HorizontalLayout {
     // notify the view menu about view changes so that it can display which view
     // is currently active
     ViewChangeListener viewChangeListener = new ViewChangeListener() {
-
+    	
+    	
         @Override
         public boolean beforeViewChange(ViewChangeEvent event) {
             return true;
         }
-
+        
         @Override
         public void afterViewChange(ViewChangeEvent event) {
             menu.setActiveView(event.getViewName());

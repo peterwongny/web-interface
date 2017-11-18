@@ -9,6 +9,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
+/**
+ * booking (tour offering) entity that is in the database
+ * @author Wong Ngo Yin
+ *
+ */
 @Entity //refering to the type of record in a table
 @Table(name = "booking_table")
 public class Booking {
@@ -190,6 +195,9 @@ public class Booking {
 	 * @return the status
 	 */
 	public BookingStatus getStatus() {
+		if (status == null) {
+			status = "not confirmed";
+		}
 		if (status.equals("confirmed"))
 			return BookingStatus.values()[0];
 		if (status.equals("not confirmed"))
