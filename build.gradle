@@ -12,11 +12,26 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: "jacoco"
 //apply plugin: 'war'
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination file("${buildDir}/jacocoHtml")
+	}
+}
 
 jar {
     baseName = 'web-interface'
     version =  '0.1.0'
+}
+
+
+javadoc {
+	options.addStringOption("sourcepath", "")
+	options.encoding = 'UTF-8'
 }
 
 repositories {
@@ -43,7 +58,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web") 
 	compile group: 'org.vaadin.addons', name: 'vaadin-grid-util', version: '2.1.0'
     
-    
+    compile group: 'javax.portlet', name: 'portlet-api', version: '2.0'
 //    compile group: 'ru.xpoft.vaadin', name: 'spring-vaadin-integration'
     testCompile("junit:junit")
     testCompile("org.springframework.boot:spring-boot-starter-test")
