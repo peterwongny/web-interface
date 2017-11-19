@@ -28,7 +28,6 @@ jar {
     version =  '0.1.0'
 }
 
-
 javadoc {
 	options.addStringOption("sourcepath", "")
 	options.encoding = 'UTF-8'

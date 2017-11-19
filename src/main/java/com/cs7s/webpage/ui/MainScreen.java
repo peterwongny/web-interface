@@ -1,7 +1,5 @@
 package com.cs7s.webpage.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.cs7s.webpage.ui.bookingTable.BookingView;
 import com.cs7s.webpage.ui.customerTable.CustomerView;
 import com.cs7s.webpage.ui.promotion.PromotionView;
@@ -12,36 +10,30 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
-
 /**
- * the screen that is shown after login 
- * 
- * consist of menu and the view shown
+ * The screen that is shown after login. It consists of a menu and the views.
  * @author Wong Ngo Yin
- *
  */
-
 @SpringComponent
+@SuppressWarnings({"deprecation", "serial"})
 @UIScope
 public class MainScreen extends HorizontalLayout {
-	
-	
-    private Menu menu;
+	private Menu menu;
 
+	/**
+	 * The main UI class.
+	 */
     public MyUI ui;
 
     /**
-     * constructt of MainScreen
-     * @param ui
+     * The constructor of MainScreen.
+     * @param ui the main UI class.
      */
     public MainScreen(MyUI ui) {
-    	
-
         setStyleName("main-screen");
 
         CssLayout viewContainer = new CssLayout();
@@ -68,7 +60,6 @@ public class MainScreen extends HorizontalLayout {
         menu.addView(new PromotionView(), PromotionView.VIEW_NAME,
                 PromotionView.VIEW_NAME, FontAwesome.EDIT);
         
-        
         menu.addView(new ReportView(ui.bookingRepo, ui.tourRepo), ReportView.VIEW_NAME,
         ReportView.VIEW_NAME, FontAwesome.EDIT);
 
@@ -80,11 +71,8 @@ public class MainScreen extends HorizontalLayout {
         setSizeFull();
     }
 
-    // notify the view menu about view changes so that it can display which view
-    // is currently active
-    ViewChangeListener viewChangeListener = new ViewChangeListener() {
-    	
-    	
+    // Notify the view menu about view changes so that it can display the currently active view.
+    private ViewChangeListener viewChangeListener = new ViewChangeListener() {
         @Override
         public boolean beforeViewChange(ViewChangeEvent event) {
             return true;
@@ -94,6 +82,5 @@ public class MainScreen extends HorizontalLayout {
         public void afterViewChange(ViewChangeEvent event) {
             menu.setActiveView(event.getViewName());
         }
-
     };
 }

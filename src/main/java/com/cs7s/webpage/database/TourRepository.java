@@ -17,6 +17,7 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 	 * @return the list of tours that contain the description.
 	 */
 	public List<Tour> findByDescriptionContainingIgnoreCase(String description);
+
 	/**
 	 * Finds all tours that contain the desired name.
 	 * @param name the name of the desired tours.

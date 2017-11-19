@@ -1,135 +1,260 @@
 package com.cs7s.webpage.ui.report;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.cs7s.webpage.database.Booking;
 import com.cs7s.webpage.database.BookingRepository;
 import com.cs7s.webpage.database.TourRepository;
+
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+/**
+ * Generates weekly reports.
+ */
+@SuppressWarnings("serial")
 public class BookingReport extends VerticalLayout {
-	
 	private BookingRepository bookingRepo;
 	private TourRepository tourRepo;
-	
+	private int maxShown = 5;
+
+	/**
+	 * The constructor for BookingReport;
+	 * @param bookingRepo the booking repository.
+	 * @param tourRepo the tour repository.
+	 */
 	public BookingReport(BookingRepository bookingRepo, TourRepository tourRepo) {
 		this.bookingRepo = bookingRepo;
 		this.tourRepo = tourRepo;
+
+		Calendar cal = Calendar.getInstance();
+		cal.add( Calendar.DAY_OF_WEEK, -(cal.get(Calendar.DAY_OF_WEEK)-1)); 
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedStartDate = "1971-01-01";
+		String formattedEndDate = format1.format(cal.getTime());
+
+		Label overallLabel = new Label("<h1><b>OVERALL</b></h1>"
+				+ "<h3><b>Retrieved on: " + formattedEndDate + " Sunday</b></h3><hr>", ContentMode.HTML);
+		overallLabel.setSizeFull();
+		this.addComponent(overallLabel);
+		this.setComponentAlignment(overallLabel, Alignment.TOP_CENTER);
+		generateReport(formattedStartDate, formattedEndDate);
 		
-		this.addComponent(new Label("OVERALL", ContentMode.PREFORMATTED));
+		cal.add( Calendar.DAY_OF_WEEK, -7);
+		formattedStartDate = format1.format(cal.getTime());
 		
-		//most search
-		String maxHitString = "Most search tour: \n";
-		List<Map.Entry<String, Integer>> maxHits = getMaxFromMap(getHits());
-		
-		for(Map.Entry<String, Integer> maxHit : maxHits) {
-			
-			String tourName = tourRepo.findById(maxHit.getKey()).get(0).getName();
-			
-			maxHitString += "\t" + tourName + " (" + Integer.toString(maxHit.getValue()) + " hits)\n";
-		}
-		Label maxHitLabel = new Label();
-		maxHitLabel.setContentMode(ContentMode.PREFORMATTED);
-		maxHitLabel.setValue(maxHitString);
-		this.addComponent(maxHitLabel);
-		
-		
-		// most joined
-		String maxJoinString = "Tour with most people joined: \n";
-		List<Map.Entry<String, Integer>> maxJoins = getMaxFromMap(getJoined());
-		
-		for(Map.Entry<String, Integer> maxJoin : maxJoins) {
-			
-			String tourName = tourRepo.findById(maxJoin.getKey()).get(0).getName();
-			
-			maxJoinString += "\t" + tourName + " (" + Integer.toString(maxJoin.getValue()) + " people)\n";
-		}
-		Label maxJoinLabel = new Label();
-		maxJoinLabel.setContentMode(ContentMode.PREFORMATTED);
-		maxJoinLabel.setValue(maxJoinString);
-		this.addComponent(maxJoinLabel);
-		
-		
-		//most joined percentage
-		String maxJoinPercentString = "Tour with most people joined in percentage: \n";
-		List<Map.Entry<String, Double>> maxJoinsPercents = getMaxFromMapDouble(getJoinPercentage());
-		
-		for(Map.Entry<String, Double> maxJoinsPercent : maxJoinsPercents) {
-			
-			String tourName = tourRepo.findById(maxJoinsPercent.getKey()).get(0).getName();
-			
-			maxJoinPercentString += "\t" + tourName + " (" + Double.toString(maxJoinsPercent.getValue()) + "%)\n";
-		}
-		Label maxJoinPercentLabel = new Label();
-		maxJoinPercentLabel.setContentMode(ContentMode.PREFORMATTED);
-		maxJoinPercentLabel.setValue(maxJoinPercentString);
-		this.addComponent(maxJoinPercentLabel);
-		
-		
-		//least joined percentage
-		String minJoinPercentString = "Tour with least people joined in percentage: \n";
-		List<Map.Entry<String, Double>> minJoinsPercents = getMinFromMapDouble(getJoinPercentage());
-		
-		for(Map.Entry<String, Double> minJoinsPercent : minJoinsPercents) {
-			
-		String tourName = tourRepo.findById(minJoinsPercent.getKey()).get(0).getName();
-				
-		minJoinPercentString += "\t" + tourName + " (" + Double.toString(minJoinsPercent.getValue()) + "%)\n";
-		}
-		Label minJoinPercentLabel = new Label();
-		minJoinPercentLabel.setContentMode(ContentMode.PREFORMATTED);
-		minJoinPercentLabel.setValue(minJoinPercentString);
-		this.addComponent(minJoinPercentLabel);
-		
-		
+		Label weeklyLabel = new Label("<hr size='40' color='black' /><h1><b>" + formattedStartDate + " to " + formattedEndDate + "</b></h1>"
+				+ "<h3><b>Retrieved on: " + formattedEndDate + " Sunday</b></h3><hr>", ContentMode.HTML);
+		weeklyLabel.setSizeFull();
+		this.addComponent(weeklyLabel);
+		this.setComponentAlignment(overallLabel, Alignment.TOP_CENTER);
+		generateReport(formattedStartDate, formattedEndDate);
 	}
 	
-	private Map<String, Integer> getHits(){
-		List<Booking> data = bookingRepo.findAll();
-		
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		for(Booking booking : data) {
-			if(result.get(booking.getTour_id()) == null) {
-				result.put(booking.getTour_id(), booking.getHits());
+	private void generateReport(String formattedStartDate, String formattedEndDate) {
+		// Most searched tours
+		String maxHitString = "<h2><b>" + maxShown + " most searched tours:</b></h2>\n";
+		Map<String, Integer> maxHits = sortByValueDesc(getHits(formattedStartDate, formattedEndDate));
+		List<String> maxHitsList = new ArrayList<String>(maxHits.keySet());
+
+		int count = 0;
+		for(String maxHit : maxHitsList) {
+			String tourName = tourRepo.findById(maxHit).get(0).getName();
+			maxHitString += "\t<p><b>" + tourName + " (" + Integer.toString(maxHits.get(maxHit)) + " hits)</b></p>\n";
+
+			if (++count == maxShown) {
+				break;
 			}
-			else {
+		}
+		Label maxHitLabel = new Label();
+		maxHitLabel.setContentMode(ContentMode.HTML);
+		maxHitLabel.setValue(maxHitString);
+		maxHitLabel.setSizeFull();
+		this.addComponent(maxHitLabel);
+
+		// Most joined tours
+		String maxJoinString = "<h2><b>" + maxShown + " most joined tours:</b></h2>\n";
+		Map<String, Integer> maxJoins = sortByValueDesc(getJoined(formattedStartDate, formattedEndDate));
+		List<String> maxJoinsList = new ArrayList<String>(maxJoins.keySet());
+
+		count = 0;
+		for(String maxJoin : maxJoinsList) {
+			String tourName = tourRepo.findById(maxJoin).get(0).getName();
+			maxJoinString += "\t<p><b>" + tourName + " (" + Integer.toString(maxJoins.get(maxJoin)) + " people)</b></p>\n";
+
+			if (++count == maxShown) {
+				break;
+			}
+		}
+		Label maxJoinLabel = new Label();
+		maxJoinLabel.setContentMode(ContentMode.HTML);
+		maxJoinLabel.setValue(maxJoinString);
+		maxJoinLabel.setSizeFull();
+		this.addComponent(maxJoinLabel);
+
+		// Most joined tours by percentage
+		String maxJoinPercentString = "<h2><b>" + maxShown + "  most joined tours (in percentage):</b></h2>\n";
+		Map<String, Double> maxJoinsPercents = sortByValueDesc(getJoinPercentage(formattedStartDate, formattedEndDate));
+		ArrayList<String> maxJoinsPercentsList = new ArrayList<String>(maxJoinsPercents.keySet());
+
+		count = 0;
+		for(String maxJoinsPercent : maxJoinsPercentsList) {
+			String tourName = tourRepo.findById(maxJoinsPercent).get(0).getName();
+
+			maxJoinPercentString += "\t<p><b>" + tourName + " (" + Double.toString(maxJoinsPercents.get(maxJoinsPercent)) + "%)</b></p>\n";
+			if (++count == maxShown) {
+				break;
+			}
+		}
+		Label maxJoinPercentLabel = new Label();
+		maxJoinPercentLabel.setContentMode(ContentMode.HTML);
+		maxJoinPercentLabel.setValue(maxJoinPercentString);
+		maxJoinPercentLabel.setSizeFull();
+		this.addComponent(maxJoinPercentLabel);
+
+		// Least searched tours
+		String minHitString = "<h2><b>" + maxShown + " least searched tours:</b></h2>\n";
+		Map<String, Integer> minHits = sortByValueAsc(getHits(formattedStartDate, formattedEndDate));
+		List<String> minHitsList = new ArrayList<String>(maxHits.keySet());
+
+		count = 0;
+		for(String minHit : minHitsList) {
+			String tourName = tourRepo.findById(minHit).get(0).getName();
+			minHitString += "\t<p><b>" + tourName + " (" + Integer.toString(minHits.get(minHit)) + " hits)</b></p>\n";
+
+			if (++count == maxShown) {
+				break;
+			}
+		}
+		Label minHitLabel = new Label();
+		minHitLabel.setContentMode(ContentMode.HTML);
+		minHitLabel.setValue(minHitString);
+		minHitLabel.setSizeFull();
+		this.addComponent(minHitLabel);		
+
+		// Least joined tours by percentage
+		String minJoinPercentString = "<h2><b>" + maxShown + " least joined tours (in percentage):</b></h2>\n";
+		Map<String, Double> minJoinsPercents = sortByValueAsc(getJoinPercentage(formattedStartDate, formattedEndDate));
+		ArrayList<String> minJoinsPercentsList = new ArrayList<String>(minJoinsPercents.keySet());
+
+		count = 0;
+		for(String minJoinsPercent : minJoinsPercentsList) {
+			String tourName = tourRepo.findById(minJoinsPercent).get(0).getName();
+			minJoinPercentString += "\t<p><b>" + tourName + " (" + Double.toString(minJoinsPercents.get(minJoinsPercent)) + "%)</b></p>\n";
+
+			if (++count == maxShown) {
+				break;
+			}
+		}
+		Label minJoinPercentLabel = new Label();
+		minJoinPercentLabel.setContentMode(ContentMode.HTML);
+		minJoinPercentLabel.setValue(minJoinPercentString);
+		minJoinPercentLabel.setSizeFull();
+		this.addComponent(minJoinPercentLabel);
+	}
+
+	private <K, V extends Comparable<? super V>> Map<K, V> sortByValueAsc(Map<K, V> map) {
+		return map.entrySet()
+				.stream()
+				.sorted(Map.Entry.comparingByValue())
+				.collect(Collectors.toMap(
+						Map.Entry::getKey, 
+						Map.Entry::getValue, 
+						(e1, e2) -> e1, 
+						LinkedHashMap::new
+						));
+	}
+
+	private <K, V extends Comparable<? super V>> Map<K, V> sortByValueDesc(Map<K, V> map) {
+		return map.entrySet()
+				.stream()
+				.sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+				.collect(Collectors.toMap(
+						Map.Entry::getKey, 
+						Map.Entry::getValue, 
+						(e1, e2) -> e1, 
+						LinkedHashMap::new
+						));
+	}
+
+	private boolean dateInRange(String date1, String date2, Date targetDate) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date startDate = null;
+		Date endDate = null;
+		try {
+			startDate = format.parse(date1);
+			endDate = format.parse(date2);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return !(targetDate.compareTo(startDate) < 0 || targetDate.compareTo(endDate) > 0);
+	}
+
+	private Map<String, Integer> getHits(String date1, String date2) {
+		List<Booking> data = bookingRepo.findAll();
+		Map<String, Integer> result = new HashMap<String, Integer>();
+
+		for(Booking booking : data) {
+			Date tourDate = booking.getDate();
+
+			if (!dateInRange(date1, date2, tourDate)) {
+				continue;
+			} else if(result.get(booking.getTour_id()) == null) {
+				result.put(booking.getTour_id(), booking.getHits());
+			} else {
 				result.put(booking.getTour_id(), result.get(booking.getTour_id()) + booking.getHits());
 			}
 		}
-		
+
 		return result;
 	}
-	
-	private Map<String, Integer> getJoined(){
+
+	private Map<String, Integer> getJoined(String date1, String date2) {
 		List<Booking> data = bookingRepo.findAll();
-		
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		
+
 		for(Booking booking : data) {
+			Date tourDate = booking.getDate();
+
+			if (!dateInRange(date1, date2, tourDate)) {
+				continue;
+			}
+
 			int numJoined = Integer.parseInt(booking.getTotal_cap()) - Integer.parseInt(booking.getRemaining_cap());
 			if(result.get(booking.getTour_id()) == null) {
 				result.put(booking.getTour_id(), numJoined);
-			}
-			else {
+			} else {
 				result.put(booking.getTour_id(), result.get(booking.getTour_id()) + numJoined);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	private Map<String, Integer> getCapacity(){
+
+	private Map<String, Integer> getCapacity(String date1, String date2) {
 		List<Booking> data = bookingRepo.findAll();
-		
+
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		
+
 		for(Booking booking : data) {
+			Date tourDate = booking.getDate();
+			if (!dateInRange(date1, date2, tourDate)) {
+				continue;
+			}
+
 			int capacity = Integer.parseInt(booking.getTotal_cap());
 			if(result.get(booking.getTour_id()) == null) {
 				result.put(booking.getTour_id(), capacity);
@@ -138,105 +263,21 @@ public class BookingReport extends VerticalLayout {
 				result.put(booking.getTour_id(), result.get(booking.getTour_id()) + capacity);
 			}
 		}
-		
+
 		return result;
 	}
-	
-	private Map<String, Double> getJoinPercentage(){
-		Map<String, Integer> capacity = getCapacity();
-		Map<String, Integer> join = getJoined();
+
+	private Map<String, Double> getJoinPercentage(String date1, String date2) {
+		Map<String, Integer> capacity = getCapacity(date1, date2);
+		Map<String, Integer> join = getJoined(date1, date2);
 		Map<String, Double> result = new HashMap<String, Double>();
-		
-		for (Map.Entry<String, Integer> entry : capacity.entrySet())
-		{
+
+		for (Map.Entry<String, Integer> entry : capacity.entrySet()) {
 			double size = entry.getValue();
 			double percentage = join.get(entry.getKey()) * 100.0 / size ;
-		    result.put(entry.getKey(), percentage);
+			result.put(entry.getKey(), percentage);
 		}
-		
+
 		return result;
 	}
-	
-	private List<Map.Entry<String, Integer>> getMaxFromMap(Map<String, Integer> map) {
-		
-		List<Map.Entry<String, Integer>> maxEntry = new ArrayList<Map.Entry<String, Integer>>();
-		
-		for (Map.Entry<String, Integer> entry : map.entrySet())
-		{
-		    if (maxEntry.isEmpty() || entry.getValue() > maxEntry.get(0).getValue())
-		    {
-		        maxEntry.clear();
-		        maxEntry.add(entry);
-		    }
-		    else if (entry.getValue() == maxEntry.get(0).getValue())
-		    {
-		        maxEntry.add(entry);
-		    }
-		}
-		
-		return maxEntry;
-	}
-	
-	private List<Map.Entry<String, Double>> getMaxFromMapDouble(Map<String, Double> map) {
-		
-		List<Map.Entry<String, Double>> maxEntry = new ArrayList<Map.Entry<String, Double>>();
-		
-		for (Map.Entry<String, Double> entry : map.entrySet())
-		{
-		    if (maxEntry.isEmpty() || entry.getValue() > maxEntry.get(0).getValue())
-		    {
-		        maxEntry.clear();
-		        maxEntry.add(entry);
-		    }
-		    else if (entry.getValue() == maxEntry.get(0).getValue())
-		    {
-		        maxEntry.add(entry);
-		    }
-		}
-		
-		return maxEntry;
-	}
-	
-//	private List<Map.Entry<String, Integer>> getMinFromMap(Map<String, Integer> map) {
-//		
-//		List<Map.Entry<String, Integer>> minEntry = new ArrayList<Map.Entry<String, Integer>>();
-//		
-//		for (Map.Entry<String, Integer> entry : map.entrySet())
-//		{
-//		    if (minEntry.isEmpty() || entry.getValue() < minEntry.get(0).getValue())
-//		    {
-//		    	minEntry.clear();
-//		        minEntry.add(entry);
-//		    }
-//		    else if (entry.getValue() == minEntry.get(0).getValue())
-//		    {
-//		    	minEntry.add(entry);
-//		    }
-//		}
-//		
-//		return minEntry;
-//	}
-	
-	private List<Map.Entry<String, Double>> getMinFromMapDouble(Map<String, Double> map) {
-		
-		List<Map.Entry<String, Double>> minEntry = new ArrayList<Map.Entry<String, Double>>();
-		
-		for (Map.Entry<String, Double> entry : map.entrySet())
-		{
-		    if (minEntry.isEmpty() || entry.getValue() < minEntry.get(0).getValue())
-		    {
-		    	minEntry.clear();
-		        minEntry.add(entry);
-		    }
-		    else if (entry.getValue() == minEntry.get(0).getValue())
-		    {
-		    	minEntry.add(entry);
-		    }
-		}
-		
-		return minEntry;
-	}
-	
 }
-
-

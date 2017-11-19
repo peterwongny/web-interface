@@ -28,6 +28,7 @@ public class CustomerForm extends FormLayout {
 	private TextField fee = new TextField("Fee");
 	private TextField amt_paid = new TextField("Amount Paid");
 	private TextField special_req = new TextField("Special Requests");
+	
 	private Button save = new Button("Save");
 	private Button close = new Button("Close Form");
 
@@ -58,6 +59,7 @@ public class CustomerForm extends FormLayout {
 		save.addClickListener(e -> save());
 		close.addClickListener(e -> setVisible(false));
 	}
+
 	/**
 	 * Bind the form to the provided customer entity.
 	 * @param customer the customer entity.
@@ -69,7 +71,7 @@ public class CustomerForm extends FormLayout {
 		setVisible(true);
 		name.selectAll();
 	}
-	
+
 	private void save() {
 		customerView.save(customer);
 		setVisible(false);

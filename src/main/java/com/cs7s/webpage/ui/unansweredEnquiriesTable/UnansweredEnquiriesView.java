@@ -31,7 +31,7 @@ public class UnansweredEnquiriesView extends Panel implements View {
 	/**
 	 * The name of this view.
 	 */
-	public final static String VIEW_NAME = "UnansweredEnquiries";
+	public final static String VIEW_NAME = "Unanswered Enquiries Table";
 
 
 	final Grid<UnansweredEnquiries> grid;
@@ -50,7 +50,7 @@ public class UnansweredEnquiriesView extends Panel implements View {
 		provider = new ListDataProvider<>(unansweredEnquiriesRepo.findAll());
 		grid.setDataProvider(provider);
 		grid.setColumnOrder("line_id", "enquiry", "answered");
-		grid.removeColumn("id");
+
 		updateList();
 
 		// Filter

@@ -43,7 +43,9 @@ public class LoginScreen extends VerticalLayout {
 		//        addComponent(new Image(null, new ClassResource("images/logo.png")));
 
 		// login form, centered in the available part of the screen
-		final Panel loginPanel = new Panel("Login");
+		final Panel loginPanel = new Panel("<h2><b>Staff Login</b></h2>");
+		loginPanel.setCaptionAsHtml(true);
+		loginPanel.addStyleName("login-panel");
 		addComponent(loginPanel);
 		setSizeFull();
 		setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
@@ -60,10 +62,12 @@ public class LoginScreen extends VerticalLayout {
 		loginForm.setSizeUndefined();
 		loginForm.setMargin(true);
 
-		loginForm.addComponent(username = new TextField("Username"));
+		loginForm.addComponent(username = new TextField("<h4><b>Username</b></h4>"));
 		username.setWidth(15, Unit.EM);
-		loginForm.addComponent(password = new PasswordField("Password"));
+		username.setCaptionAsHtml(true);
+		loginForm.addComponent(password = new PasswordField("<h4><b>Password</b></h4>"));
 		password.setWidth(15, Unit.EM);
+		password.setCaptionAsHtml(true);
 		CssLayout buttons = new CssLayout();
 		buttons.setStyleName("buttons");
 		loginForm.addComponent(buttons);

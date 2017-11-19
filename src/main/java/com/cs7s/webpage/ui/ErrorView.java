@@ -5,12 +5,10 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * the error page
- * 
- * the page is shown when no any other page is pointed to 
+ * The error page, which is shown when no any other page is pointed to.
  * @author Wong Ngo Yin
- *
  */
+@SuppressWarnings("serial")
 public class ErrorView extends VerticalLayout implements View {
 	@Override
   public void enter(ViewChangeEvent event) {

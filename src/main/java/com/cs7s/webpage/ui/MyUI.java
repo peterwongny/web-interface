@@ -30,73 +30,96 @@ import com.vaadin.ui.themes.ValoTheme;
 @SpringUI
 @SuppressWarnings("serial")
 @Theme("valo")
-public class MyUI extends UI {    
-    @Autowired
-    public TourRepository tourRepo;
-    
-    @Autowired
-    public BookingRepository bookingRepo;
-    
-    @Autowired
-    public CustomerRepository customerRepo;   
-    
-    @Autowired
-    private StaffLoginRepository staffLoginRepo;
-    
-    @Autowired
-    public UnansweredEnquiriesRepository unRepo;
-   
-    private AccessControl accessControl;
-    MainScreen mainscreen;
+public class MyUI extends UI {
+	/**
+	 * The tour repository.
+	 */
+	@Autowired
+	public TourRepository tourRepo;
 
-    /**
-     * Initializes the UI.
-     * @param vaadinRequest
-     */
-    @Override
-    protected void init(VaadinRequest vaadinRequest) {
-    	accessControl = new BasicAccessControl(staffLoginRepo);
-        Responsive.makeResponsive(this);
-        setLocale(vaadinRequest.getLocale());
-        
-        getPage().setTitle("CS Sevens");
-        //getPage().getStyles().add(
-                //".v-panel {background: transparent !important;} .v-verticallayout {background: url('images/logo.png');}");
+	/**
+	 * The booking repository.
+	 */
+	@Autowired
+	public BookingRepository bookingRepo;
 
-        if (!accessControl.isUserSignedIn()) {
-        	LoginScreen loginScreen = new LoginScreen(accessControl);
-        	loginScreen.addEventListener(e -> showMainView());
-        	
-        	setContent(loginScreen);
-        } else {
-            showMainView();
-        }
-    }
+	/**
+	 * The customer repository.
+	 */
+	@Autowired
+	public CustomerRepository customerRepo;   
 
-    protected void showMainView() {
-        addStyleName(ValoTheme.UI_WITH_MENU);
-        setContent(new MainScreen(MyUI.this));
-        getNavigator().navigateTo(getNavigator().getState());
-    }
-    
-    /**
-     * Gets the current UI.
-     * @return MyUI the UI.
-     */
-    public static MyUI get() {
-        return (MyUI) UI.getCurrent();
-    }
-    
-    /**
-     * Returns the accessControl that handles authentication.
-     * @return accessControl
-     */
-    public AccessControl getAccessControl() {
-        return accessControl;
-    }
-    
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    @WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
-    public static class MyUIServlet extends VaadinServlet {
-    }
+	/**
+	 * The staff login repository.
+	 */
+	@Autowired
+	private StaffLoginRepository staffLoginRepo;
+
+	/**
+	 * The unanswered enquiries repository.
+	 */
+	@Autowired
+	public UnansweredEnquiriesRepository unRepo;
+
+	private AccessControl accessControl;
+	MainScreen mainscreen;
+
+	/**
+	 * Initializes the UI.
+	 * @param vaadinRequest
+	 */
+	@Override
+	protected void init(VaadinRequest vaadinRequest) {
+		accessControl = new BasicAccessControl(staffLoginRepo);
+		Responsive.makeResponsive(this);
+		setLocale(vaadinRequest.getLocale());
+
+		getPage().setTitle("CS Sevens");
+		getPage().getStyles().add("h1,h2,h3,p { text-align:center; } "
+				+ ".login-screen, .valo-menu-part {"
+				+ "background-image:url(\"http://avante.biz/wp-content/uploads/Gradient-Wallpapers/Gradient-Wallpapers-043.jpg\") !important; "
+				+ "background-repeat:no-repeat; background-size:cover;"
+				+ "} "
+				+ ".v-formlayout-login-form {background-color:rgb(220,220,220);}"
+				+ "");
+
+		if (!accessControl.isUserSignedIn()) {
+			LoginScreen loginScreen = new LoginScreen(accessControl);
+			loginScreen.addEventListener(e -> showMainView());
+
+			setContent(loginScreen);
+		} else {
+			showMainView();
+		}
+	}
+
+	/**
+	 * Show the main view.
+	 */
+	protected void showMainView() {
+		addStyleName(ValoTheme.UI_WITH_MENU);
+		setContent(new MainScreen(MyUI.this));
+		getNavigator().navigateTo(getNavigator().getState());
+	}
+
+	/**
+	 * Gets the current UI.
+	 * @return MyUI the UI.
+	 */
+	public static MyUI get() {
+		return (MyUI) UI.getCurrent();
+	}
+
+	/**
+	 * Returns the accessControl that handles authentication.
+	 * @return accessControl
+	 */
+	public AccessControl getAccessControl() {
+		return accessControl;
+	}
+
+	@VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+	@WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
+	public static class MyUIServlet extends VaadinServlet {
+	}
 }
