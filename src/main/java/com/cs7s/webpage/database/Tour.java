@@ -12,32 +12,32 @@ import javax.persistence.Column;
 @Entity // Refers to the type of record in a table.
 @Table(name = "tour_list")
 public class Tour {
-    @Id
-    private String id;
-    
-    @Column(name = "name")
-    private String name;
+	@Id
+	private String id;
 
-    @Column(name = "description")
-    private String description;
-    
-    @Column(name = "duration")
-    private int duration;
-    
-    @Column(name = "day")
-    private String day;
-    
-    @Column(name = "weekday_price")
-    private Integer weekday_price;
-    
-    @Column(name = "weekend_price")
-    private Integer weekend_price;
-    
-    @Column(name = "tag")
-    private String tag;
-    
-    @Column(name = "hits")
-    private int hits;
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "description")
+	private String description;
+
+	@Column(name = "duration")
+	private int duration;
+
+	@Column(name = "day")
+	private String day;
+
+	@Column(name = "weekday_price")
+	private Integer weekday_price;
+
+	@Column(name = "weekend_price")
+	private Integer weekend_price;
+
+	@Column(name = "tag")
+	private String tag;
+
+	@Column(name = "hits")
+	private int hits;
 
 	/**
 	 * @return the tour ID.
@@ -94,7 +94,7 @@ public class Tour {
 	public void setDuration(String duration) {
 		setDuration(Integer.parseInt(duration));
 	}
-	
+
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
@@ -126,7 +126,7 @@ public class Tour {
 	public void setWeekday_price(String weekday_price) {
 		setWeekday_price(Integer.parseInt(weekday_price));
 	}
-	
+
 	public void setWeekday_price(int weekday_price) {
 		this.weekday_price = weekday_price;
 	}
@@ -145,7 +145,7 @@ public class Tour {
 		setWeekend_price(Integer.parseInt(weekend_price));
 
 	}
-	
+
 	public void setWeekend_price(int weekend_price) {
 		this.weekend_price = weekend_price;
 	}

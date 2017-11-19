@@ -4,7 +4,7 @@ com.cs7s.webpage.database
 com.cs7s.webpage.ui
 com.cs7s.webpage.ui.bookingTable
 com.cs7s.webpage.ui.customerTable
-com.cs7s.webpage.ui.enquiriesTable
 com.cs7s.webpage.ui.promotion
 com.cs7s.webpage.ui.report
 com.cs7s.webpage.ui.tourList
+com.cs7s.webpage.ui.unansweredEnquiriesTable

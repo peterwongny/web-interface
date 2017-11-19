@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cs7s.webpage.ui.bookingTable.BookingView;
 import com.cs7s.webpage.ui.customerTable.CustomerView;
-import com.cs7s.webpage.ui.enquiriesTable.UnansweredEnquiriesView;
 import com.cs7s.webpage.ui.promotion.PromotionView;
 import com.cs7s.webpage.ui.report.ReportView;
 import com.cs7s.webpage.ui.tourList.TourView;
+import com.cs7s.webpage.ui.unansweredEnquiriesTable.UnansweredEnquiriesView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;

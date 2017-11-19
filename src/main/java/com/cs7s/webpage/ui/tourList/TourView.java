@@ -20,8 +20,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * The page that displays Tour List.
- * The tours can be searched, edited, sorted, and filtered on this page.
+ * The page that shows the Tour List. The records of the table can be edited and searched here.
  * @author Wong Ngo Yin
  */
 @SpringComponent
@@ -29,33 +28,39 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @UIScope
 public class TourView extends Panel implements View {
-	public final static String VIEW_NAME = "Tour List";
-
+	/**
+	 * The tour repository.
+	 */
 	public TourRepository tourRepo;
 	private TourForm form = new TourForm(this);
 	private VerticalLayout verticalLayout = new VerticalLayout();
-		
+
+	/**
+	 * The name of this view.
+	 */
+	public final static String VIEW_NAME = "Tour List";
+
 	private final Grid<Tour> grid;
 	final ListDataProvider<Tour> provider;
-	
+
 	private List<Tour> tourlist;
-	
+
 	/**
 	 * The constructor of TourView.
-	 * @param tourRepo the Tour List repository.
+	 * @param tourRepo the tour repository.
 	 */
 	public TourView(TourRepository tourRepo) {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
 		grid.setSizeUndefined();
-	    grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "tag", "hits");
-	    
-	    tourlist = tourRepo.findAll();
-	    provider = new ListDataProvider<>(tourlist);	
+		grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "tag", "hits");
+
+		tourlist = tourRepo.findAll();
+		provider = new ListDataProvider<>(tourlist);	
 		grid.setDataProvider(provider);
 		updateList();
-		
-		//filter
+
+		// Filter
 		final GridCellFilter<Tour> filter = new GridCellFilter<>(this.grid, Tour.class);
 		filter.setTextFilter("id",true,false);
 		filter.setTextFilter("name", true, false);
@@ -66,63 +71,62 @@ public class TourView extends Panel implements View {
 		filter.setTextFilter("weekend_price", true, true);
 		filter.setTextFilter("tag", true, false);
 		filter.setNumberFilter("hits", Integer.class);
-		
-        Button addTourBtn = new Button("Add new tour");
-        addTourBtn.addClickListener(e -> {
-        	grid.asSingleSelect().clear();
-        	form.setTour(new Tour());
-        	setSizeFull();
-        });
 
-        HorizontalLayout toolbar = new HorizontalLayout(addTourBtn);
+		Button addTourBtn = new Button("Add new tour");
+		addTourBtn.addClickListener(e -> {
+			grid.asSingleSelect().clear();
+			form.setTour(new Tour());
+			setSizeFull();
+		});
 
-        HorizontalLayout main = new HorizontalLayout(grid, form);
-        main.setSizeFull();
-        grid.setSizeFull();
-        grid.setHeightByRows(10);
-        
-        verticalLayout.addComponents(toolbar, main);
-                
-        form.setVisible(false);
-        
-        grid.asSingleSelect().addValueChangeListener(e -> {
-        	if (e.getValue() == null) {
-        		form.setVisible(false);
-        	}
-        	else {
-        		form.setTour(e.getValue());
-        		setSizeFull();
-        	}
-        });
+		HorizontalLayout toolbar = new HorizontalLayout(addTourBtn);
+
+		HorizontalLayout main = new HorizontalLayout(grid, form);
+		main.setSizeFull();
+		grid.setSizeFull();
+		grid.setHeightByRows(10);
+
+		verticalLayout.addComponents(toolbar, main);
+
+		form.setVisible(false);
+
+		grid.asSingleSelect().addValueChangeListener(e -> {
+			if (e.getValue() == null) {
+				form.setVisible(false);
+			}
+			else {
+				form.setTour(e.getValue());
+				setSizeFull();
+			}
+		});
 	}
-	
+
 	/**
-	 * Entry point when user selects this page which updates the table.
-	 * @param ViewChangeEvent
+	 * Indicates that the user has entered this page.
+	 * @param event the event that fires when the user has entered this page.
 	 */
 	@Override
-    public void enter(ViewChangeEvent event) {
+	public void enter(ViewChangeEvent event) {
 		updateList();
 		verticalLayout.addComponent(grid);
 		setContent(verticalLayout);
-    }
-	
+	}
+
 	/**
-	 * Updates the table based on the Tour List in the database.
+	 * Updates Tour List using the data from the database.
 	 */
 	public void updateList() {
 		tourlist.clear();
 		tourlist.addAll(tourRepo.findAll());
 		provider.refreshAll();
 	}
-	
+
 	/**
-	 * Updates or inserts a tour entity from the Tour List in the database.
-	 * @param tour the tour to be saved.
+	 * Save (insert or update) an entity in Tour List.
+	 * @param tour the tour entity.
 	 */
 	public void save(Tour tour) {
 		tourRepo.saveAndFlush(tour);
 		updateList();
 	}
-
 }

@@ -17,47 +17,47 @@ import javax.persistence.Column;
 @Entity // Refers to the type of record in a table.
 @Table(name = "customer_table")
 public class Customer {
-    @Column(name = "id")
-    @GeneratedValue(generator = "UUID")
-   	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Id
-    private UUID id;
-	
-    @Column(name = "name")
-    private String name;
-    
-    @Column(name = "cust_id")
-    private String cust_id;
-    
-    @Column(name = "line_id")
-    private String line_id;
+	@Column(name = "id")
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	@Id
+	private UUID id;
 
-    @Column(name = "phone")
-    private String phone;
-    
-    @Column(name = "age")
-    private int age;
-    
-    @Column(name = "tour_joined")
-    private String tour_joined;
-    
-    @Column(name = "adult_num")
-    private int adult_num;
-    
-    @Column(name = "children_num")
-    private int children_num;
-    
-    @Column(name = "toddler_num")
-    private int toddler_num;
-    
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "cust_id")
+	private String cust_id;
+
+	@Column(name = "line_id")
+	private String line_id;
+
+	@Column(name = "phone")
+	private String phone;
+
+	@Column(name = "age")
+	private int age;
+
+	@Column(name = "tour_joined")
+	private String tour_joined;
+
+	@Column(name = "adult_num")
+	private int adult_num;
+
+	@Column(name = "children_num")
+	private int children_num;
+
+	@Column(name = "toddler_num")
+	private int toddler_num;
+
 	@Column(name = "fee")
-    private int fee;
-    
-    @Column(name = "amt_paid")
-    private int amt_paid;
-    
-    @Column(name = "special_req")
-    private String special_req;
+	private int fee;
+
+	@Column(name = "amt_paid")
+	private int amt_paid;
+
+	@Column(name = "special_req")
+	private String special_req;
 
 	/**
 	 * @return the customer's name.
@@ -128,7 +128,7 @@ public class Customer {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
+
 	public void setAge(String age) {
 		setAge(Integer.parseInt(age));
 	}
@@ -160,7 +160,7 @@ public class Customer {
 	public void setAdult_num(int adult_num) {
 		this.adult_num = adult_num;
 	}
-	
+
 	public void setAdult_num(String adult_num) {
 		setAdult_num(Integer.parseInt(adult_num));
 	}
@@ -178,7 +178,7 @@ public class Customer {
 	public void setChildren_num(int children_num) {
 		this.children_num = children_num;
 	}
-	
+
 	public void setChildren_num(String children_num) {
 		setChildren_num(Integer.parseInt(children_num));
 	}
@@ -196,7 +196,7 @@ public class Customer {
 	public void setToddler_num(int toddler_num) {
 		this.toddler_num = toddler_num;
 	}
-	
+
 	public void setToddler_num(String toddler_num) {
 		setToddler_num(Integer.parseInt(toddler_num));
 	}
@@ -214,7 +214,7 @@ public class Customer {
 	public void setFee(int fee) {
 		this.fee = fee;
 	}
-	
+
 	public void setFee(String fee) {
 		setFee(Integer.parseInt(fee));
 	}
@@ -232,7 +232,7 @@ public class Customer {
 	public void setAmt_paid(int amt_paid) {
 		this.amt_paid = amt_paid;
 	}
-	
+
 	public void setAmt_paid(String amt_paid) {
 		setAmt_paid(Integer.parseInt(amt_paid));
 	}

@@ -17,6 +17,6 @@ public interface StaffLoginRepository extends JpaRepository<StaffLogin, Long> {
 	 */
 	@Query(value = "SELECT EXISTS(SELECT * FROM staff_login_table "
 			+ "WHERE username=LOWER(?1) AND password=crypt(?2, password))",
-		    nativeQuery = true)
+			nativeQuery = true)
 	public String authenticate(String username, String password);
 }

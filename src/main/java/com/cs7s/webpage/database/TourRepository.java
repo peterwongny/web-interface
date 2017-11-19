@@ -17,7 +17,6 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 	 * @return the list of tours that contain the description.
 	 */
 	public List<Tour> findByDescriptionContainingIgnoreCase(String description);
-	
 	/**
 	 * Finds all tours that contain the desired name.
 	 * @param name the name of the desired tours.
@@ -28,7 +27,7 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
 			+ "UNION "
 			+ "SELECT * FROM tour_list WHERE LOWER(name) LIKE "
 			+ "CONCAT('%', LOWER(?1), '%')",
-		    nativeQuery = true)
+			nativeQuery = true)
 	public List<Tour> findByName(String name);
 
 	/**

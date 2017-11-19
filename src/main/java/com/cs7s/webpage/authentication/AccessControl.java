@@ -10,11 +10,11 @@ public interface AccessControl {
 	 * @param password the password.
 	 * @return true if the user successfully signed in.
 	 */
-    public boolean signIn(String username, String password);
+	public boolean signIn(String username, String password);
 
-    /**
-     * Returns true if there is a user that is signed in.
-     * @return true if there is a user that is signed in.
-     */
-    public boolean isUserSignedIn();
+	/**
+	 * Returns true if there is a user that is signed in.
+	 * @return true if there is a user that is signed in.
+	 */
+	public boolean isUserSignedIn();
 }
