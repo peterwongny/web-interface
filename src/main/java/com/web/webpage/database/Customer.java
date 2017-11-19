@@ -1,14 +1,9 @@
 package com.web.webpage.database;
 
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import java.time.LocalDate;
-
 import javax.persistence.Column;
-
 
 /**
  * customer entity that exist in the database

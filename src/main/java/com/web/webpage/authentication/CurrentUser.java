@@ -3,7 +3,6 @@ package com.web.webpage.authentication;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.server.WrappedSession;
 
-
 public final class CurrentUser {
 
     /**

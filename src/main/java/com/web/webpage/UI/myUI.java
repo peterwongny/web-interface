@@ -25,6 +25,7 @@ import com.web.webpage.database.Tour;
 import com.web.webpage.database.TourRepository;
 import com.web.webpage.database.BookingRepository;
 import com.web.webpage.database.CustomerRepository;
+import com.web.webpage.database.StaffLoginRepository;
 //import com.web.webpage.database.UnansweredEnquiriesRepository;
 
 
@@ -53,7 +54,10 @@ public class myUI extends UI {
     public BookingRepository bookingRepo;
     
     @Autowired
-    public CustomerRepository customerRepo;    
+    public CustomerRepository customerRepo;   
+    
+    @Autowired
+    public StaffLoginRepository staffLoginRepo;
     
 //    @Autowired
 //    public UnansweredEnquiriesRepository unRepo; 

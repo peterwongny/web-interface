@@ -1,13 +1,28 @@
 package com.web.webpage.authentication;
 
+import com.web.webpage.database.StaffLoginDatabaseEngine;
 
 public class BasicAccessControl implements AccessControl {
 
+	private StaffLoginDatabaseEngine staffLoginDBE = new StaffLoginDatabaseEngine();
+	
     @Override
     public boolean signIn(String username, String password) {
-        if (username == null || username.isEmpty())
+    	// Empty field check
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
             return false;
-
+        }
+        
+        // Check password
+        try {
+	        if (!this.staffLoginDBE.authenticate(username, password)) {
+	        	return false;
+	        }
+        } catch (Exception e) {
+        	System.out.println("Error ocurred: " + e.toString());
+        	return false;
+        }
+        
         CurrentUser.set(username);
         return true;
     }

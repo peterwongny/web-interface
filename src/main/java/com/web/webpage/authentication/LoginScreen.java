@@ -17,8 +17,7 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * UI content when the user is not logged in yet.
  */
-public class LoginScreen extends VerticalLayout{
-
+public class LoginScreen extends VerticalLayout {
     private TextField username;
     private PasswordField password;
     private Button login;
@@ -37,12 +36,9 @@ public class LoginScreen extends VerticalLayout{
         // login form, centered in the available part of the screen
         Component loginForm = buildLoginForm();
 
-
         addComponent(loginForm);
         
         setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
-
-
     }
 
     private Component buildLoginForm() {
@@ -76,13 +72,12 @@ public class LoginScreen extends VerticalLayout{
         return loginForm;
     }
 
-
     private void login() {
         if (accessControl.signIn(username.getValue(), password.getValue())) {
         	loginSuccessful();
         } else {
             showNotification(new Notification("Login failed",
-                    "Please check your username and password and try again.",
+                    "Please check your username and password, and try again.",
                     Notification.Type.HUMANIZED_MESSAGE));
             username.focus();
         }
