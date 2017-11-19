@@ -28,8 +28,8 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 @Component
 @SpringUI
-@Theme("valo")
 @SuppressWarnings("serial")
+@Theme("valo")
 public class MyUI extends UI {    
     @Autowired
     public TourRepository tourRepo;
@@ -57,7 +57,11 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         Responsive.makeResponsive(this);
         setLocale(vaadinRequest.getLocale());
+        
         getPage().setTitle("CS Sevens");
+        //getPage().getStyles().add(
+                //".v-panel {background: transparent !important;} .v-verticallayout {background: url('images/logo.png');}");
+
         if (!accessControl.isUserSignedIn()) {
         	LoginScreen loginScreen = new LoginScreen(accessControl);
         	loginScreen.addEventListener(e -> showMainView());
@@ -89,9 +93,9 @@ public class MyUI extends UI {
     public AccessControl getAccessControl() {
         return accessControl;
     }
-
-    @WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
+    
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+    @WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
     public static class myUIServlet extends VaadinServlet {
     }
 }

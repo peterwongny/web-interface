@@ -1,14 +1,18 @@
 package com.cs7s.webpage.authentication;
 
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.ClassResource;
 import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -38,12 +42,17 @@ public class LoginScreen extends VerticalLayout {
     private void buildUI() {
         addStyleName("login-screen");
 
-        // login form, centered in the available part of the screen
-        Component loginForm = buildLoginForm();
-
-        addComponent(loginForm);
+//        addComponent(new Image(null, new ClassResource("images/logo.png")));
         
-        setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+        // login form, centered in the available part of the screen
+        final Panel loginPanel = new Panel("Login");
+        addComponent(loginPanel);
+        setSizeFull();
+        setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
+        loginPanel.setWidth(null);
+        
+        Component loginForm = buildLoginForm();
+        loginPanel.setContent(loginForm);
     }
 
     private Component buildLoginForm() {
@@ -51,7 +60,7 @@ public class LoginScreen extends VerticalLayout {
 
         loginForm.addStyleName("login-form");
         loginForm.setSizeUndefined();
-        loginForm.setMargin(false);
+        loginForm.setMargin(true);
 
         loginForm.addComponent(username = new TextField("Username"));
         username.setWidth(15, Unit.EM);
@@ -83,7 +92,7 @@ public class LoginScreen extends VerticalLayout {
         } else {
             showNotification(new Notification("Login failed",
                     "Please check your username and password, and try again.",
-                    Notification.Type.HUMANIZED_MESSAGE));
+                    Notification.Type.ERROR_MESSAGE));
             username.focus();
         }
     }
@@ -92,6 +101,7 @@ public class LoginScreen extends VerticalLayout {
         // keep the notification visible a little while after moving the
         // mouse, or until clicked
         notification.setDelayMsec(2000);
+        notification.setPosition(Position.TOP_CENTER);
         notification.show(Page.getCurrent());
     }
     

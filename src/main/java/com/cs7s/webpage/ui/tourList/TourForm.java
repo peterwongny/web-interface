@@ -1,11 +1,8 @@
 package com.cs7s.webpage.ui.tourList;
 
-
 import com.cs7s.webpage.database.Tour;
 import com.vaadin.data.Binder;
-import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.spring.annotation.ViewScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
@@ -13,22 +10,20 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
-
-@ViewScope
 /**
- * a form that show the information of a tour entity so user can edit
+ * A form that shows the information of a tour entity so that users can edit the tour.
  * @author Wong Ngo Yin
- *
  */
+@SuppressWarnings("serial")
+@ViewScope
 public class TourForm extends FormLayout {
-
-	private TextField id = new TextField("Id");
-	private TextField name = new TextField("name");
-	private TextField description = new TextField("description");
-	private TextField duration = new TextField("duration");
-	private TextField day = new TextField("day");
-	private TextField weekday_price = new TextField("weekday_price");
-	private TextField weekend_price = new TextField("weekend_price");
+	private TextField id = new TextField("ID");
+	private TextField name = new TextField("Name");
+	private TextField description = new TextField("Description");
+	private TextField duration = new TextField("Duration");
+	private TextField day = new TextField("Day");
+	private TextField weekday_price = new TextField("Weekday Price");
+	private TextField weekend_price = new TextField("Weekend Price");
 	
 	private Button save = new Button("Save");
 	private Button delete = new Button("Delete");
