@@ -6,10 +6,10 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 
 /**
- * Staff login entity that exists in the database.
+ * The staff login entity that exists in the database.
  * @author Gian Miguel Sero Del Mundo
  */
-@Entity //refering to the type of record in a table
+@Entity // Refers to the type of record in a table.
 @Table(name = "staff_login_table")
 public class StaffLogin {
 	@Id

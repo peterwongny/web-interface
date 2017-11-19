@@ -1,7 +1,6 @@
 package com.cs7s.webpage.authentication;
 
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.ClassResource;
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
@@ -10,7 +9,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;

@@ -1,40 +1,34 @@
 package com.cs7s.webpage.ui.customerTable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.gridutil.cell.GridCellFilter;
-
 import com.cs7s.webpage.database.Customer;
 import com.cs7s.webpage.database.CustomerRepository;
-import com.vaadin.data.provider.CallbackDataProvider;
+
 import com.vaadin.data.provider.ListDataProvider;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
+
+import java.util.List;
+
+import org.vaadin.gridutil.cell.GridCellFilter;
 
 /**
  * the page that show customer table, you can edit and search the table in this page
  * @author Wong Ngo Yin
  *
  */
+@SuppressWarnings("serial")
 public class CustomerView extends Panel implements View{
 	
 	public CustomerRepository customerRepo;
 	private CustomerForm form = new CustomerForm(this);
 	private VerticalLayout verticalLayout = new VerticalLayout();
 
-	public final static String VIEW_NAME = "Customer List";
+	public final static String VIEW_NAME = "Customer Table";
 	
 	
 	final Grid<Customer> grid;
@@ -52,17 +46,16 @@ public class CustomerView extends Panel implements View{
 		customerTable = customerRepo.findAll();
 		provider = new ListDataProvider<>(customerRepo.findAll());
 		grid.setDataProvider(provider);
-		grid.setColumnOrder("cust_id", "name", "age", "phone", "line_id", "tour_joined", "adult_num", "children_num", "toddler_num", "fee", "amt_paid", "special_req");
+		grid.setColumnOrder("name", "cust_id", "line_id", "phone", "age", "tour_joined", "adult_num", "children_num", "toddler_num", "fee", "amt_paid", "special_req");
 		updateList();
-		
 		
 		//filter
 		final GridCellFilter<Customer> filter = new GridCellFilter<>(this.grid, Customer.class);
-		filter.setTextFilter("cust_id",true,false);
 		filter.setTextFilter("name", true, false);
-		filter.setTextFilter("age", true, true);
-		filter.setTextFilter("phone", true, false);
+		filter.setTextFilter("cust_id",true,false);
 		filter.setTextFilter("line_id", true, false);
+		filter.setTextFilter("phone", true, false);
+		filter.setTextFilter("age", true, true);
 		filter.setTextFilter("tour_joined", true, false);
 		filter.setTextFilter("adult_num", true, false);
 		filter.setTextFilter("children_num", true, false);

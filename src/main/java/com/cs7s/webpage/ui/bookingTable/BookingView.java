@@ -1,11 +1,8 @@
 package com.cs7s.webpage.ui.bookingTable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.gridutil.cell.CellFilterComponent;
 import org.vaadin.gridutil.cell.GridCellFilter;
 
@@ -13,22 +10,15 @@ import com.cs7s.webpage.database.Booking;
 import com.cs7s.webpage.database.BookingRepository;
 import com.cs7s.webpage.database.BookingStatus;
 import com.vaadin.data.provider.ListDataProvider;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.renderers.AbstractRenderer;
-import com.vaadin.ui.renderers.DateRenderer;
-import com.vaadin.ui.renderers.Renderer;
-import com.vaadin.ui.themes.ValoTheme;
 
 
 /**
@@ -36,17 +26,14 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Wong Ngo Yin
  *
  */
+@SuppressWarnings("serial")
 public class BookingView extends Panel implements View{
-	
-	
-
 	public BookingRepository bookingRepo;
 	private TextField filterText = new TextField();
 	private BookingForm form = new BookingForm(this);
 	private VerticalLayout verticalLayout = new VerticalLayout();
 
 	public final static String VIEW_NAME = "Booking Table";
-	
 	
 	final Grid<Booking> grid;
 	private ListDataProvider<Booking> provider;
@@ -82,8 +69,7 @@ public class BookingView extends Panel implements View{
 		filter.setTextFilter("tour_guide_line_acc", true, false);
 		filter.setNumberFilter("hits", Integer.class);
 		
-		CellFilterComponent<ComboBox<BookingStatus>> statusFilter = filter.setComboBoxFilter("status", BookingStatus.class, Arrays.asList(BookingStatus.Confirmed, BookingStatus.Not_Confirmed, BookingStatus.Cancelled));
-
+		CellFilterComponent<ComboBox<BookingStatus>> statusFilter = filter.setComboBoxFilter("status", BookingStatus.class, Arrays.asList(BookingStatus.CONFIRMED, BookingStatus.NOT_CONFIRMED, BookingStatus.CANCELLED));
 
         Button addBookingBtn = new Button("Add new booking");
         addBookingBtn.addClickListener(e -> {

@@ -1,8 +1,5 @@
 package com.cs7s.webpage.database;
 
-import com.cs7s.webpage.database.Tour;
-import com.cs7s.webpage.database.TourRepository;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
@@ -20,9 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @EnableAutoConfiguration
 @DataJpaTest
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { TourRepositoryTest.class, Tour.class })
+@SpringBootTest(classes = { TourTest.class, Tour.class })
 @SuppressWarnings("deprecation")
-public class TourRepositoryTest {
+public class TourTest {
 	@Autowired
 	private TourRepository tourRepo;
 
@@ -32,6 +29,7 @@ public class TourRepositoryTest {
 		boolean thrown = false;
 		int size = 0;
 		Iterable<Tour> tours;
+
 		try {
 			tours = this.tourRepo.findAll();
 			for(Tour tour: tours) {
@@ -40,6 +38,7 @@ public class TourRepositoryTest {
 		} catch (Exception e) {
 			thrown = true;
 		}
+
 		assertThat(!thrown).isEqualTo(true);
 		assertThat(size).isGreaterThan(0);
 	}
@@ -49,14 +48,16 @@ public class TourRepositoryTest {
 		boolean thrown = false;
 		String name = "";
 		Iterable<Tour> tours;
+
 		try {
 			tours = this.tourRepo.findByName("shenzhen");
 			for(Tour tour: tours) {
-				name=tour.getName();
+				name = tour.getName();
 			}
 		} catch (Exception e) {
 			thrown = true;
 		}
+
 		assertThat(!thrown).isEqualTo(true);
 		assertThat(name).isEqualTo("Shenzhen city tour");
 	}
@@ -66,14 +67,16 @@ public class TourRepositoryTest {
 		Iterable<Tour> tours;
 		boolean thrown = false;
 		String name = "";
+
 		try {
 			tours = this.tourRepo.findByDescriptionContainingIgnoreCase("window of the");
 			for(Tour tour: tours) {
-				name=tour.getName();
+				name = tour.getName();
 			}
 		} catch (Exception e) {
 			thrown = true;
 		}
+
 		assertThat(!thrown).isEqualTo(true);
 		assertThat(name).isEqualTo("Shenzhen city tour");
 	}
@@ -84,6 +87,7 @@ public class TourRepositoryTest {
 		boolean thrown = false;
 		String name1 = "";
 		String name2 = "";
+
 		try {
 			tours = this.tourRepo.findByName("Shenzhen city tour omg!");
 			for(Tour tour: tours) {
@@ -96,11 +100,12 @@ public class TourRepositoryTest {
 		} catch (Exception e) {
 			thrown = true;
 		}
+
 		assertThat(!thrown).isEqualTo(true);
 		assertThat(name1).isEqualTo("Shenzhen city tour");
 		assertThat(name2).isEqualTo("Shenzhen city tour");
 	}
-	
+
 	@Test
 	public void findById() throws Exception {
 		boolean thrown = false;
@@ -114,7 +119,47 @@ public class TourRepositoryTest {
 		} catch (Exception e) {
 			thrown = true;
 		}
+
 		assertThat(!thrown).isEqualTo(true);
 		assertThat(name).isEqualTo("Shimen National Forest Tour");
+	}
+
+	@Test
+	public void setAndGetTour() throws Exception {
+		boolean thrown = false;
+		Tour testTour = null;
+		try {
+			testTour = new Tour();
+			testTour.setId("9D999");
+			testTour.setName("Test Tour");
+			testTour.setDescription("For testing");
+			testTour.setDuration("999");
+			testTour.setDay("Mon");
+			testTour.setWeekday_price("999");
+			testTour.setWeekend_price("999");
+			testTour.setTag("Test");
+			testTour.setHits(0);
+			tourRepo.save(testTour);
+
+			Iterable<Tour> tours = this.tourRepo.findByName("Test Tour");
+			testTour = null;
+			for (Tour tour : tours) {
+				testTour = tour;
+			}
+		} catch (Exception e) {
+			thrown = true;
+		}
+
+		assertThat(!thrown).isEqualTo(true);
+		assertThat(testTour).isNotNull();
+		assertThat(testTour.getId()).isEqualTo("9D999");
+		assertThat(testTour.getName()).isEqualTo("Test Tour");
+		assertThat(testTour.getDescription()).isEqualTo("For testing");
+		assertThat(testTour.getDuration()).isEqualTo("999");
+		assertThat(testTour.getDay()).isEqualTo("Mon");
+		assertThat(testTour.getWeekday_price()).isEqualTo("999");
+		assertThat(testTour.getWeekend_price()).isEqualTo("999");
+		assertThat(testTour.getTag()).isEqualTo("Test");
+		assertThat(testTour.getHits()).isGreaterThanOrEqualTo(0);
 	}
 }

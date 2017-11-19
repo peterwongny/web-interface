@@ -20,6 +20,7 @@ import com.vaadin.ui.themes.ValoTheme;
  * @author Wong Ngo Yin
  *
  */
+@SuppressWarnings("serial")
 public class BookingForm extends FormLayout {
 
 	private TextField booking_id = new TextField("booking_id");

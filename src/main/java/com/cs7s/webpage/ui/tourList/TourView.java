@@ -48,7 +48,7 @@ public class TourView extends Panel implements View {
 		this.tourRepo = tourRepo;
 		this.grid = new Grid<>(Tour.class);
 		grid.setSizeUndefined();
-	    grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "hits");
+	    grid.setColumnOrder("id", "name", "description", "duration", "day", "weekday_price", "weekend_price", "tag", "hits");
 	    
 	    tourlist = tourRepo.findAll();
 	    provider = new ListDataProvider<>(tourlist);	
@@ -64,6 +64,7 @@ public class TourView extends Panel implements View {
 		filter.setTextFilter("day", true, false);
 		filter.setTextFilter("weekday_price", true, true);
 		filter.setTextFilter("weekend_price", true, true);
+		filter.setTextFilter("tag", true, false);
 		filter.setNumberFilter("hits", Integer.class);
 		
         Button addTourBtn = new Button("Add new tour");
@@ -113,15 +114,6 @@ public class TourView extends Panel implements View {
 		tourlist.clear();
 		tourlist.addAll(tourRepo.findAll());
 		provider.refreshAll();
-	}
-	
-	/**
-	 * Deletes a tour entity from the Tour List in the database.
-	 * @param tour
-	 */
-	public void delete(Tour tour) {
-		tourRepo.delete(tour);
-		updateList();
 	}
 	
 	/**

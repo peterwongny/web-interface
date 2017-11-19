@@ -24,9 +24,9 @@ public class TourForm extends FormLayout {
 	private TextField day = new TextField("Day");
 	private TextField weekday_price = new TextField("Weekday Price");
 	private TextField weekend_price = new TextField("Weekend Price");
+	private TextField tag = new TextField("Tag");
 	
 	private Button save = new Button("Save");
-	private Button delete = new Button("Delete");
 	private Button close = new Button("Close Form");
 	
 	private TourView tourView;
@@ -39,10 +39,10 @@ public class TourForm extends FormLayout {
 		this.tourView = tourView;
 		
 		setSizeUndefined();
-		HorizontalLayout buttons = new HorizontalLayout(save, delete, close);
-		HorizontalLayout row1 = new HorizontalLayout(id, name,duration, day);
+		HorizontalLayout buttons = new HorizontalLayout(save, close);
+		HorizontalLayout row1 = new HorizontalLayout(id, name,description, duration);
 		description.setSizeFull();
-		HorizontalLayout row2 = new HorizontalLayout(weekday_price, weekend_price, description);
+		HorizontalLayout row2 = new HorizontalLayout(day, weekday_price, weekend_price, tag);
 		addComponents(row1, row2, buttons);
 		
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -51,9 +51,7 @@ public class TourForm extends FormLayout {
 		binder.bindInstanceFields(this);
 		
 		save.addClickListener(e -> save());
-		delete.addClickListener(e -> delete());
 		close.addClickListener(e -> setVisible(false));
-	
 	}
 	
 	/**
@@ -61,17 +59,11 @@ public class TourForm extends FormLayout {
 	 * @param tour
 	 */
 	public void setTour(Tour tour) {
-
 		this.tour = tour;
 		binder.setBean(tour);
 		
 		setVisible(true);
 		id.selectAll();
-	}
-	
-	private void delete() {
-		tourView.delete(tour);
-		setVisible(false);
 	}
 	
 	private void save() {

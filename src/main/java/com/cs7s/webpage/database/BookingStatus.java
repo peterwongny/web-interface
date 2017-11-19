@@ -2,10 +2,7 @@ package com.cs7s.webpage.database;
 
 
 /**
- * enumerate all possible booking status
+ * An enumeration of all possible booking statuses.
  * @author Wong Ngo Yin
- *
  */
-public enum BookingStatus {
-	Confirmed, Not_Confirmed, Cancelled
-}
+public enum BookingStatus { CONFIRMED, NOT_CONFIRMED, CANCELLED }

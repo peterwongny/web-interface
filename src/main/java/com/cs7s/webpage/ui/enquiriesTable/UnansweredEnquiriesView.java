@@ -68,7 +68,7 @@ public class UnansweredEnquiriesView extends Panel implements View{
 		filter.setTextFilter("line_id", true, false);
 		filter.setTextFilter("enquiry", true, false);
 
-		CellFilterComponent<ComboBox<EnquiriesStatus>> statusFilter = filter.setComboBoxFilter("answered", EnquiriesStatus.class, Arrays.asList(EnquiriesStatus.True, EnquiriesStatus.False));
+		CellFilterComponent<ComboBox<EnquiriesStatus>> statusFilter = filter.setComboBoxFilter("answered", EnquiriesStatus.class, Arrays.asList(EnquiriesStatus.TRUE, EnquiriesStatus.FALSE));
 
       HorizontalLayout main = new HorizontalLayout(grid, form);
       main.setSizeFull();

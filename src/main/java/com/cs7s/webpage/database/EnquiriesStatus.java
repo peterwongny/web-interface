@@ -1,8 +1,7 @@
 package com.cs7s.webpage.database;
 
 /**
- * enumerate all possible status of enquiries status
+ * Enumerates all possible enquiry statuses.
  * @author Wong Ngo Yin
- *
  */
-public enum EnquiriesStatus {False, True}
+public enum EnquiriesStatus { FALSE, TRUE }

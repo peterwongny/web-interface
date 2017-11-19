@@ -17,8 +17,4 @@ public interface AccessControl {
      * @return true if there is a user that is signed in.
      */
     public boolean isUserSignedIn();
-
-    public boolean isUserInRole(String role);
-
-    public String getPrincipalName();
 }

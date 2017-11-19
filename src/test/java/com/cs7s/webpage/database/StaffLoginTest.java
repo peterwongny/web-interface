@@ -17,9 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 @EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = { StaffLoginRepositoryTest.class, StaffLogin.class })
+@SpringBootTest(classes = { StaffLoginTest.class, StaffLogin.class })
 @SuppressWarnings("deprecation")
-public class StaffLoginRepositoryTest {
+public class StaffLoginTest {
 	@Autowired
 	StaffLoginRepository staffLoginRepo;
 	

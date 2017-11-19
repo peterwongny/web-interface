@@ -1,19 +1,13 @@
 package com.cs7s.webpage.database;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.util.*;
-
 
 /**
- * booking (tour offering) repository that perform query, insert, update the database
+ * The booking (tour offering) repository that performs query, insert, and update on Booking Table.
  * @author Wong Ngo Yin
- *
  */
 @Repository
-public interface BookingRepository extends JpaRepository<Booking, Long> 
-{
-
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 
 }
