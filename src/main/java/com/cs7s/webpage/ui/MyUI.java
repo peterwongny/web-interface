@@ -12,7 +12,7 @@ import com.cs7s.webpage.database.BookingRepository;
 import com.cs7s.webpage.database.CustomerRepository;
 import com.cs7s.webpage.database.StaffLoginRepository;
 import com.cs7s.webpage.database.TourRepository;
-
+import com.cs7s.webpage.database.UnansweredEnquiriesRepository;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Responsive;
@@ -43,8 +43,8 @@ public class MyUI extends UI {
     @Autowired
     public StaffLoginRepository staffLoginRepo;
     
-//    @Autowired
-//    public UnansweredEnquiriesRepository unRepo;
+    @Autowired
+    public UnansweredEnquiriesRepository unRepo;
    
     private AccessControl accessControl = new BasicAccessControl();
     MainScreen mainscreen;

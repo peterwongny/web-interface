@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cs7s.webpage.ui.bookingTable.BookingView;
 import com.cs7s.webpage.ui.customerTable.CustomerView;
+import com.cs7s.webpage.ui.enquiriesTable.UnansweredEnquiriesView;
 import com.cs7s.webpage.ui.promotion.PromotionView;
 import com.cs7s.webpage.ui.report.ReportView;
 import com.cs7s.webpage.ui.tourList.TourView;
@@ -61,14 +62,14 @@ public class MainScreen extends HorizontalLayout {
         menu.addView(new CustomerView(ui.customerRepo), CustomerView.VIEW_NAME,
                 CustomerView.VIEW_NAME, FontAwesome.EDIT);
         
-//        menu.addView(new UnansweredEnquiriesView(ui.unRepo), UnansweredEnquiriesView.VIEW_NAME,
-//        		UnansweredEnquiriesView.VIEW_NAME, FontAwesome.EDIT);
+        menu.addView(new UnansweredEnquiriesView(ui.unRepo), UnansweredEnquiriesView.VIEW_NAME,
+        		UnansweredEnquiriesView.VIEW_NAME, FontAwesome.EDIT);
         
         menu.addView(new PromotionView(), PromotionView.VIEW_NAME,
                 PromotionView.VIEW_NAME, FontAwesome.EDIT);
         
         
-        menu.addView(new ReportView(), ReportView.VIEW_NAME,
+        menu.addView(new ReportView(ui.bookingRepo, ui.tourRepo), ReportView.VIEW_NAME,
         ReportView.VIEW_NAME, FontAwesome.EDIT);
 
         navigator.addViewChangeListener(viewChangeListener);

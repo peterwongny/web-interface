@@ -5,4 +5,4 @@ package com.cs7s.webpage.database;
  * @author Wong Ngo Yin
  *
  */
-public enum EnquiriesStatus {False, True};
+public enum EnquiriesStatus {False, True}

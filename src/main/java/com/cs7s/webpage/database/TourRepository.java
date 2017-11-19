@@ -27,5 +27,7 @@ public interface TourRepository extends JpaRepository<Tour, Long>
 		    nativeQuery = true)
 	List<Tour> findByName(String query);
 	
+	
+	List<Tour> findById(String id);
 
 }

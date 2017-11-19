@@ -99,4 +99,21 @@ public class TourRepositoryTest {
 		assertThat(name1).isEqualTo("Shenzhen city tour");
 		assertThat(name2).isEqualTo("Shenzhen city tour");
 	}
+	
+	@Test
+	public void findById() throws Exception {
+		boolean thrown = false;
+		String name = "";
+		Iterable<Tour> tours;
+		try {
+			tours = this.tourRepo.findById("2D001");
+			for(Tour tour: tours) {
+				name=tour.getName();
+			}
+		} catch (Exception e) {
+			thrown = true;
+		}
+		assertThat(!thrown).isEqualTo(true);
+		assertThat(name).isEqualTo("Shimen National Forest Tour");
+	}
 }
