@@ -41,12 +41,12 @@ public class MyUI extends UI {
     public CustomerRepository customerRepo;   
     
     @Autowired
-    public StaffLoginRepository staffLoginRepo;
+    private StaffLoginRepository staffLoginRepo;
     
     @Autowired
     public UnansweredEnquiriesRepository unRepo;
    
-    private AccessControl accessControl = new BasicAccessControl();
+    private AccessControl accessControl;
     MainScreen mainscreen;
 
     /**
@@ -55,6 +55,7 @@ public class MyUI extends UI {
      */
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+    	accessControl = new BasicAccessControl(staffLoginRepo);
         Responsive.makeResponsive(this);
         setLocale(vaadinRequest.getLocale());
         
@@ -96,6 +97,6 @@ public class MyUI extends UI {
     
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     @WebServlet(urlPatterns={"/*","/VAADIN/*"}, asyncSupported = true)
-    public static class myUIServlet extends VaadinServlet {
+    public static class MyUIServlet extends VaadinServlet {
     }
 }

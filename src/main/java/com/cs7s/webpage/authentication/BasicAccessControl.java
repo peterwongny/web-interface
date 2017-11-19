@@ -1,12 +1,20 @@
 package com.cs7s.webpage.authentication;
 
-import com.cs7s.webpage.database.StaffLoginDatabaseEngine;
+import com.cs7s.webpage.database.StaffLoginRepository;
+import com.vaadin.spring.annotation.SpringComponent;
+import com.vaadin.spring.annotation.UIScope;
 
 /**
  * The implementation of AccessControl class.
  */
+@SpringComponent
+@UIScope
 public class BasicAccessControl implements AccessControl {
-	private StaffLoginDatabaseEngine staffLoginDBE = new StaffLoginDatabaseEngine();
+	private StaffLoginRepository staffLoginRepo;
+	
+	public BasicAccessControl(StaffLoginRepository staffLoginRepo) {
+		this.staffLoginRepo = staffLoginRepo;
+	}
 	
 	/**
 	 * {@inheritDoc}
@@ -20,7 +28,7 @@ public class BasicAccessControl implements AccessControl {
         
         // Check password
         try {
-	        if (!this.staffLoginDBE.authenticate(username, password)) {
+	        if (this.staffLoginRepo.authenticate(username, password).equals("false")) {
 	        	return false;
 	        }
         } catch (Exception e) {

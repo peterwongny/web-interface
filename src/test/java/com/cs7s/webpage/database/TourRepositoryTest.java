@@ -16,19 +16,20 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@EnableAutoConfiguration
-@RunWith(SpringRunner.class)
-@DataJpaTest
 @AutoConfigureTestDatabase(replace=Replace.NONE) //uses our psql db
+@EnableAutoConfiguration
+@DataJpaTest
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { TourRepositoryTest.class, Tour.class })
+@SuppressWarnings("deprecation")
 public class TourRepositoryTest {
 	@Autowired
 	private TourRepository tourRepo;
 
+	@SuppressWarnings("unused")
 	@Test
 	public void findAll() throws Exception {
 		boolean thrown = false;
-		String name = "";
 		int size = 0;
 		Iterable<Tour> tours;
 		try {
