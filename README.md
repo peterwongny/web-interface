@@ -65,9 +65,9 @@ Filter the records by typing in the values under the title cell of a column.
 Update a record by simply clicking on the desired record, and editing the values in the fields on the top of the page.
 
 ## Documentation and Testing
-[Javadocs](doc/index.html)  
+[Javadocs](https://drive.google.com/open?id=1bKbc6LdWGSOYmMq6Nsq8RhE5nXm-t-ij)  
 
-[Jacoco](build/jacocoHtml/index.html)
+[Jacoco](https://drive.google.com/open?id=1hH8cq10lxVodV_YAAjlmEn9TDMQM_Gry)
 
 ## Authors
 
