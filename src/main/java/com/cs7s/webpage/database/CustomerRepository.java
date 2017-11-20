@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+
 
 /**
  * The customer repository that performs query, insert, and update on Customer Table.
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> 
 {
-//	List<Customer> findBytourJoined(String s);
-
+	@Query(value = "SELECT * FROM customer_table WHERE tour_joined = ?",
+		    nativeQuery = true)
+	List<Customer> findByTourJoined(String s);
 }

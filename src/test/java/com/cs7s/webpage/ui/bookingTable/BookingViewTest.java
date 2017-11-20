@@ -2,6 +2,7 @@ package com.cs7s.webpage.ui.bookingTable;
 
 import com.cs7s.webpage.database.Booking;
 import com.cs7s.webpage.database.BookingRepository;
+import com.cs7s.webpage.database.CustomerRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -23,6 +24,8 @@ public class BookingViewTest {
 	@Mock
 	private BookingRepository bookingRepo;
 	
+	@Mock
+	private CustomerRepository customerRepo;
 	
 	private List<Booking> bookingList;
 	
@@ -48,7 +51,7 @@ public class BookingViewTest {
 
 		when(bookingRepo.findAll()).thenReturn(bookingList);
 		
-		bookingView = new BookingView(bookingRepo);
+		bookingView = new BookingView(bookingRepo,customerRepo);
 		
 		bookingView.save(booking);
 	}

@@ -1,7 +1,10 @@
 package com.cs7s.webpage.ui.bookingTable;
 
 import com.cs7s.webpage.database.Booking;
+import com.cs7s.webpage.database.Customer;
 import com.cs7s.webpage.database.BookingRepository;
+import com.cs7s.webpage.database.CustomerRepository;
+import com.cs7s.webpage.database.BookingStatus;
 import com.cs7s.webpage.database.BookingStatus;
 import com.cs7s.webpage.database.Customer;
 import com.google.gson.JsonArray;
@@ -38,6 +41,7 @@ public class BookingView extends Panel implements View {
 	 * The booking repository.
 	 */
 	public BookingRepository bookingRepo;
+	public CustomerRepository customerRepo;
 	private BookingForm form = new BookingForm(this);
 	private VerticalLayout verticalLayout = new VerticalLayout();
 
@@ -54,8 +58,10 @@ public class BookingView extends Panel implements View {
 	 * The constructor of BookingView.
 	 * @param bookingRepo the booking repository to be displayed.
 	 */
-	public BookingView(BookingRepository bookingRepo) {
+	public BookingView(BookingRepository bookingRepo, CustomerRepository customerRepo) {
 		this.bookingRepo = bookingRepo;
+		this.customerRepo = customerRepo;
+
 		this.grid = new Grid<>(Booking.class);
 		grid.setSizeUndefined();
 
@@ -140,65 +146,98 @@ public class BookingView extends Panel implements View {
 	public void save(Booking booking) {
 		if (booking.getStatus() != BookingStatus.NOT_CONFIRMED) {
 			Booking q = bookingRepo.findById(booking.getBooking_id());
-			if (q==null||q.getStatus() != BookingStatus.NOT_CONFIRMED) {
+			if (q==null) {
 				//do nothing
 			}
-			else if (q.getStatus() == BookingStatus.CANCELLED){
-//				try {
-//					String response = null;
-//			    	String stringUrl = "https://api.line.me/v2/bot/message/multicast";
-//			    	stringUrl = stringUrl.replaceAll(" ", "%20");
-//			    	URL url = new URL(stringUrl);
-//			    	JsonObject params = new JsonObject();
-//			    	
-//			    	List<Customer> customers = customerRepo.findAll();
-//			    	String[] stringLineIds = new String[customers.size()];
-//			    	for(int i = 0; i < customers.size(); i++) {
-//			    		stringLineIds[i]=customers.get(i).getLine_id();
-//			    		System.out.println(stringLineIds[i]);
-//			    	}
-//			    	JsonArray lineIds = new JsonArray();
-//			        for (String id : stringLineIds) {
-//			            lineIds.add(new JsonPrimitive(id));
-//			        }
-//			    	JsonObject message = new JsonObject();
-//			    	message.addProperty("type","text");
-//			    	message.addProperty("text",promo.getDescription());
-//			    	JsonArray messages = new JsonArray();
-//			    	messages.add(message);
-//			    	params.add("to", lineIds);
-//			    	params.add("messages", messages);
-//			        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-//			        conn.setRequestMethod("POST");
-//			        conn.setRequestProperty("Authorization", 
-//			        		"Bearer 0KyopSNQN0FQIb4cQ8wnk84exJHoeR4MPhQB1TU8kTz89vZFjH"
-//			        		+ "P5x5r33TDfMpyu9iFfBv3yH3l5NoWJREQvSvaxAGXRG8rW0uGvF"
-//			        		+ "Bn2IXPTts0zK+CnQmwDK5n2Qw4576y6/kNKU16DNuz7cXai2AdB0"
-//			        		+ "4t89/1O/w1cDnyilFU=");
-//			        conn.setRequestProperty("Content-Type", 
-//			        		"application/json");
-//			        conn.setDoOutput(true);
-//			        conn.setDoInput(true);
-//			        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-//			        os.writeBytes(params.toString()); 
-//			        os.flush();
-//			        os.close();
-//			        BufferedReader in = new BufferedReader(
-//			        		new InputStreamReader(conn.getInputStream()));
-//			        String inputLine;
-//			        StringBuffer sb = new StringBuffer();
-//			        while ((inputLine = in.readLine()) != null) {
-//			            sb.append(inputLine);
-//			        }
-//			        in.close();
-//			        response = sb.toString();
-//			        System.out.println("POST RESPONSE "+response);
-//				} catch (Exception e) {
-//					System.out.println("EXCEPTION FOR POST "+ e.toString());
-//				}
-			}
-			else {
-				
+			else if (q.getStatus()!=booking.getStatus()) {
+				if (booking.getStatus() == BookingStatus.CANCELLED){
+					try {
+						String response = null;
+				    	String stringUrl = "https://vii-chatbot.herokuapp.com/cancel";
+				    	stringUrl = stringUrl.replaceAll(" ", "%20");
+				    	URL url = new URL(stringUrl);
+				    	JsonObject params = new JsonObject();
+				    	List<Customer> customers = customerRepo
+				    			.findByTourJoined(q.getBooking_id());
+				    	String[] stringLineIds = new String[customers.size()];
+				    	for(int i = 0; i < customers.size(); i++) {
+				    		stringLineIds[i]=customers.get(i).getLine_id();
+				    		System.out.println(stringLineIds[i]);
+				    	}
+				    	JsonArray lineIds = new JsonArray();
+				        for (String id : stringLineIds) {
+				            lineIds.add(new JsonPrimitive(id));
+				        }
+				    	params.add("to", lineIds);
+				    	params.addProperty("message", q.getBooking_id()+" has been cancelled.");
+				        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+				        conn.setRequestMethod("POST");
+				        conn.setRequestProperty("Content-Type", 
+				        		"application/json");
+				        conn.setDoOutput(true);
+				        conn.setDoInput(true);
+				        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+				        os.writeBytes(params.toString()); 
+				        os.flush();
+				        os.close();
+				        BufferedReader in = new BufferedReader(
+				        		new InputStreamReader(conn.getInputStream()));
+				        String inputLine;
+				        StringBuffer sb = new StringBuffer();
+				        while ((inputLine = in.readLine()) != null) {
+				            sb.append(inputLine);
+				        }
+				        in.close();
+				        response = sb.toString();
+				        System.out.println("POST RESPONSE "+response);
+					} catch (Exception e) {
+						System.out.println("EXCEPTION FOR POST "+ e.toString());
+					}
+				}
+				else if (booking.getStatus()==BookingStatus.CONFIRMED){
+					try {
+						String response = null;
+				    	String stringUrl = "https://vii-chatbot.herokuapp.com/confirm";
+				    	stringUrl = stringUrl.replaceAll(" ", "%20");
+				    	URL url = new URL(stringUrl);
+				    	JsonObject params = new JsonObject();
+				    	List<Customer> customers = customerRepo
+				    			.findByTourJoined(q.getBooking_id());
+				    	String[] stringLineIds = new String[customers.size()];
+				    	for(int i = 0; i < customers.size(); i++) {
+				    		stringLineIds[i]=customers.get(i).getLine_id();
+				    		System.out.println(stringLineIds[i]);
+				    	}
+				    	JsonArray lineIds = new JsonArray();
+				        for (String id : stringLineIds) {
+				            lineIds.add(new JsonPrimitive(id));
+				        }
+				    	params.add("to", lineIds);
+				    	params.addProperty("message", q.getBooking_id()+" has been confirmed.");
+				        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+				        conn.setRequestMethod("POST");
+				        conn.setRequestProperty("Content-Type", 
+				        		"application/json");
+				        conn.setDoOutput(true);
+				        conn.setDoInput(true);
+				        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+				        os.writeBytes(params.toString()); 
+				        os.flush();
+				        os.close();
+				        BufferedReader in = new BufferedReader(
+				        		new InputStreamReader(conn.getInputStream()));
+				        String inputLine;
+				        StringBuffer sb = new StringBuffer();
+				        while ((inputLine = in.readLine()) != null) {
+				            sb.append(inputLine);
+				        }
+				        in.close();
+				        response = sb.toString();
+				        System.out.println("POST RESPONSE "+response);
+					} catch (Exception e) {
+						System.out.println("EXCEPTION FOR POST "+ e.toString());
+					}
+				}
 			}
 		}
 		bookingRepo.saveAndFlush(booking);
