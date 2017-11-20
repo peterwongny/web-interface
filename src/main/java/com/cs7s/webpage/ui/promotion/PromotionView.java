@@ -65,7 +65,7 @@ public class PromotionView extends Panel implements View{
 		this.promoRepo = promoRepo;
 		this.bookingRepo = bookingRepo;
 		this.customerRepo = customerRepo;
-		this.form = new PromotionForm(this);
+		this.form = new PromotionForm(this, this.bookingRepo);
 		this.grid = new Grid<>(Promotion.class);
 
 		grid.setSizeUndefined();

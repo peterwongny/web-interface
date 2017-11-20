@@ -194,7 +194,7 @@ public class BookingView extends Panel implements View {
 						System.out.println("EXCEPTION FOR POST "+ e.toString());
 					}
 				}
-				else if (booking.getStatus()==BookingStatus.CONFIRMED){
+				else {
 					try {
 						String response = null;
 				    	String stringUrl = "https://vii-chatbot.herokuapp.com/confirm";

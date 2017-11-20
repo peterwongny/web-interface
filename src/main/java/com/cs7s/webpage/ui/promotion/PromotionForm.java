@@ -18,6 +18,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 import com.vaadin.ui.TwinColSelect;
 import com.cs7s.webpage.database.Booking;
+import com.cs7s.webpage.database.BookingRepository;
+
 import java.util.Set;
 import java.util.Date;
 import com.vaadin.data.Result;
@@ -47,6 +49,7 @@ public class PromotionForm extends FormLayout {
 	private Button close = new Button("Close Form");
 	
 	private PromotionView promotionView;
+	private BookingRepository bookingRepo;
 	
 	private Binder<Promotion> binder = new Binder<>(Promotion.class);
 	
@@ -54,8 +57,9 @@ public class PromotionForm extends FormLayout {
 	
 	private Promotion promo;
 	
-	public PromotionForm(PromotionView promotionView) {
+	public PromotionForm(PromotionView promotionView, BookingRepository bookingRepo) {
 		this.promotionView = promotionView;
+		this.bookingRepo = bookingRepo;
 				
 		select.setLeftColumnCaption("Available options");
         select.setRightColumnCaption("Selected options");
@@ -67,7 +71,7 @@ public class PromotionForm extends FormLayout {
         binder.bind(overall_quota, Promotion::getOverall_quota, Promotion::setOverall_quota);
         
         //Get relevant tour offering ids
-        List<Booking> bookings = promotionView.bookingRepo.findAll();
+        List<Booking> bookings = bookingRepo.findAll();
         List<String> bookingIds = new ArrayList<>();
         for(Booking booking: bookings) {
         	bookingIds.add(booking.getBooking_id());
