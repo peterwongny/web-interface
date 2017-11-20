@@ -90,6 +90,10 @@ public class BookingViewTest {
 	@Test
 	public void saveTest() throws Exception {
 
+		when(bookingRepo.findAll()).thenReturn(bookingList);
+		
+		bookingView = new BookingView(bookingRepo,customerRepo);
+
 		bookingView.save(booking);
 	}
 	
