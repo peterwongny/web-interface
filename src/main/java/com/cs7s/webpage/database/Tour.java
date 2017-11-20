@@ -28,10 +28,10 @@ public class Tour {
 	private String day;
 
 	@Column(name = "weekday_price")
-	private Integer weekday_price;
+	private int weekday_price;
 
 	@Column(name = "weekend_price")
-	private Integer weekend_price;
+	private int weekend_price;
 
 	@Column(name = "tag")
 	private String tag;

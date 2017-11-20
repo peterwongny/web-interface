@@ -194,6 +194,9 @@ public class Booking {
 	 * @return the tour offering's status.
 	 */
 	public BookingStatus getStatus() {
+		if (status == null) {
+			status = "not confirmed";
+		}
 		if (status.equals("confirmed")) {
 			return BookingStatus.CONFIRMED;
 		} else if (status.equals("not confirmed")) {
