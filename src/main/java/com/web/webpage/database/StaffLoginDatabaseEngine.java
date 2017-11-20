@@ -1,7 +1,17 @@
 package com.web.webpage.database;
 import java.sql.*;
 
+/**
+ * The database engine to connect to Staff Login Table.
+ */
 public class StaffLoginDatabaseEngine extends DatabaseEngine {
+	/**
+	 * Authenticates the input credentials.
+	 * @param username the username.
+	 * @param password the password.
+	 * @return true if the credentials were successfully authenticated.
+	 * @throws Exception
+	 */
 	public boolean authenticate(String username, String password) throws Exception {
 		try {
 			Connection connection = getConnection();

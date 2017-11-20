@@ -14,8 +14,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.util.List;
 import com.vaadin.data.ValueContext;
 import java.util.ArrayList;
-import java.util.stream.IntStream;
-import java.util.stream.Collectors;
 import com.vaadin.ui.TwinColSelect;
 import com.cs7s.webpage.database.Booking;
 import com.cs7s.webpage.database.BookingRepository;
@@ -31,7 +29,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
- * A form that shows the information of a tour entity so that users can edit the tour.
+ * A form that shows the information of a promotion entity so that users can edit the promotions.
  * @author Wong Ngo Yin
  */
 @SuppressWarnings("serial")
@@ -43,74 +41,76 @@ public class PromotionForm extends FormLayout {
 	private TextField discount = new TextField("Discount");
 	private TextField customer_quota = new TextField("Customer Quota");
 	private TextField overall_quota = new TextField("Overall Quota");
-	
-	
+
+
 	private Button save = new Button("Save");
 	private Button close = new Button("Close Form");
-	
-	private PromotionView promotionView;
-	private BookingRepository bookingRepo;
-	
+
+	private PromotionView promotionView;	
 	private Binder<Promotion> binder = new Binder<>(Promotion.class);
-	
+
 	TwinColSelect<String> select = new TwinColSelect<>();
-	
+
 	private Promotion promo;
-	
+
+	/**
+	 * The constructor of PromotionForm.
+	 * @param promotionView the representation of Promotion Table.
+	 * @param bookingRepo the booking repository.
+	 */
 	public PromotionForm(PromotionView promotionView, BookingRepository bookingRepo) {
 		this.promotionView = promotionView;
-		this.bookingRepo = bookingRepo;
-				
+
 		select.setLeftColumnCaption("Available options");
-        select.setRightColumnCaption("Selected options");
-        
-        binder.bind(description, Promotion::getDescription, Promotion::setDescription);
-        binder.bind(type, Promotion::getType, Promotion::setType);
-        binder.bind(discount, Promotion::getDiscount, Promotion::setDiscount);
-        binder.bind(customer_quota, Promotion::getCustomer_quota, Promotion::setCustomer_quota);
-        binder.bind(overall_quota, Promotion::getOverall_quota, Promotion::setOverall_quota);
-        
-        //Get relevant tour offering ids
-        List<Booking> bookings = bookingRepo.findAll();
-        List<String> bookingIds = new ArrayList<>();
-        for(Booking booking: bookings) {
-        	bookingIds.add(booking.getBooking_id());
-        }
+		select.setRightColumnCaption("Selected options");
+
+		binder.bind(description, Promotion::getDescription, Promotion::setDescription);
+		binder.bind(type, Promotion::getType, Promotion::setType);
+		binder.bind(discount, Promotion::getDiscount, Promotion::setDiscount);
+		binder.bind(customer_quota, Promotion::getCustomer_quota, Promotion::setCustomer_quota);
+		binder.bind(overall_quota, Promotion::getOverall_quota, Promotion::setOverall_quota);
+
+		//Get relevant tour offering ids
+		List<Booking> bookings = bookingRepo.findAll();
+		List<String> bookingIds = new ArrayList<>();
+		for(Booking booking: bookings) {
+			bookingIds.add(booking.getBooking_id());
+		}
 		select.setItems(bookingIds);
-		
+
 		// Few items, so we can set rows to match item count
 		select.setRows(5);
-		
+
 		setSizeUndefined();
 		HorizontalLayout buttons = new HorizontalLayout(save, close);
 		HorizontalLayout row1 = new HorizontalLayout(description, type, discount);
 		description.setSizeFull();
 		HorizontalLayout row2 = new HorizontalLayout(deadline, customer_quota,
 				overall_quota);
-		
+
 		addComponents(row1, row2, select,buttons);
-		
+
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		save.setClickShortcut(KeyCode.ENTER);
-		
+
 		save.addClickListener(e -> save());
 		close.addClickListener(e -> setVisible(false));
-	
+
 	}
-	
+
 	/**
-	 * bind the form to the tour entity provided
-	 * @param tour
+	 * Binds the form to the provided promotion entity.
+	 * @param promo the promotion entity.
 	 */
 	public void setPromotion(Promotion promo) {
 
 		this.promo = promo;
 		binder.setBean(promo);
-		
+
 		setVisible(true);
 		description.selectAll();
 	}
-		
+
 	private void save() {
 		OffsetDateTime odt = OffsetDateTime.now ( ZoneId.systemDefault () );
 		ZoneOffset zoneOffset = odt.getOffset();
@@ -141,11 +141,9 @@ public class PromotionForm extends FormLayout {
 				}
 				setVisible(false);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}	
 	}
 
 }
-

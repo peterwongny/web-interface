@@ -5,8 +5,6 @@ import com.cs7s.webpage.database.Customer;
 import com.cs7s.webpage.database.BookingRepository;
 import com.cs7s.webpage.database.CustomerRepository;
 import com.cs7s.webpage.database.BookingStatus;
-import com.cs7s.webpage.database.BookingStatus;
-import com.cs7s.webpage.database.Customer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;

@@ -1,6 +1,5 @@
 package com.cs7s.webpage.ui.unansweredEnquiriesTable;
 
-
 import com.cs7s.webpage.database.EnquiriesStatus;
 import com.cs7s.webpage.database.UnansweredEnquiries;
 
@@ -50,7 +49,6 @@ public class UnansweredEnquiriesForm extends FormLayout {
 
 		save.addClickListener(e -> save());
 		close.addClickListener(e -> setVisible(false));
-
 	}
 
 	/**
