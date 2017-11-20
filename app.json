@@ -1,0 +1,6 @@
+{
+  "name": "Web Interface",
+  "description": "A Web Inteface Application using Vaadin and Spring",
+  "repository": "https://bitbucket.org/cs7s/web-interface",
+  "keywords": ["web", "vaadin", "spring"]
+}
