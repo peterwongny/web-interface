@@ -123,6 +123,16 @@ public class BookingView extends Panel implements View {
 	 * @param booking the booking entity to be saved.
 	 */
 	public void save(Booking booking) {
+//		if (booking.getStatus() != BookingStatus.NOT_CONFIRMED) {
+//			List<Booking> q = bookingRepo.findByBookingId(booking.getBooking_id());
+//			if (q.isEmpty()||q.get(0).getStatus() != BookingStatus.NOT_CONFIRMED) {
+//				//do nothing
+//			}
+//			else {
+//				UpdateCustomer up = new UpdateCustomer(booking, customerRepo);
+//				up.update();
+//			}
+//		}
 		bookingRepo.saveAndFlush(booking);
 		updateList();
 	}

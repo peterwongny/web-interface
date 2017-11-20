@@ -14,33 +14,35 @@ import javax.persistence.Table;
 @Entity // Refers to the type of record in a table.
 @Table(name = "booking_table")
 public class Booking {
-	@Id
-	@Column(name="booking_id")
-	private String booking_id;
 
-	@Column(name="tour_id")
-	private String tour_id;
+   @Id
+    @Column(name="booking_id")
+    private String bookingId;
+    
+    @Column(name="tour_id")
+    private String tour_id;
 
-	@Column(name="date")
-	private Date date;
-
-	@Column(name="tour_guide")
-	private String tour_guide;
-
-	@Column(name="tour_guide_line_acc")
-	private String tour_guide_line_acc;
-
-	@Column(name="hotel")
-	private String hotel;
-
-	@Column(name="total_cap")
-	private int total_cap;
-
-	@Column(name="remaining_cap")
-	private int remaining_cap;
-
-	@Column(name="min_req")
-	private int min_req;
+    @Column(name="date")
+    private Date date;
+    
+    @Column(name="tour_guide")
+    private String tour_guide;
+    
+    @Column(name="tour_guide_line_acc")
+    private String tour_guide_line_acc;
+    
+    @Column(name="hotel")
+    private String hotel;
+    
+    @Column(name="total_cap")
+    private int total_cap;
+    
+    @Column(name="remaining_cap")
+    private int remaining_cap;
+    
+    @Column(name="min_req")
+    private int min_req;
+    
 
 	@Column(name="status")
 	private String status;
@@ -52,14 +54,14 @@ public class Booking {
 	 * @return the booking ID.
 	 */
 	public String getBooking_id() {
-		return booking_id;
+		return bookingId;
 	}
 
 	/**
 	 * @param booking_id the booking ID to set.
 	 */
 	public void setBooking_id(String booking_id) {
-		this.booking_id = booking_id;
+		this.bookingId = booking_id;
 	}
 
 	/**
