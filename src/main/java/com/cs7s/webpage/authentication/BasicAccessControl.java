@@ -11,6 +11,7 @@ import com.vaadin.spring.annotation.UIScope;
 @SpringComponent
 @UIScope
 public class BasicAccessControl implements AccessControl {
+
 	private StaffLoginRepository staffLoginRepo;
 
 	public BasicAccessControl(StaffLoginRepository staffLoginRepo) {

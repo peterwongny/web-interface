@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "booking_table")
 public class Booking {
 
-   @Id
+	@Id
     @Column(name="booking_id")
     private String bookingId;
     
@@ -45,13 +45,17 @@ public class Booking {
     
 
 	@Column(name="status")
-	private String status;
-
-	@Column(name="hits")
-	private int hits;
-
+    private String status;
+    
+    @Column(name="has_promotion")
+    private boolean has_promotion;
+	
+    @Column(name="hits")
+    private int hits;
+    
 	/**
 	 * @return the booking ID.
+		upstream/master
 	 */
 	public String getBooking_id() {
 		return bookingId;
@@ -165,12 +169,11 @@ public class Booking {
 	public void setMin_req(int min_req) {
 		this.min_req = min_req;
 	}
-
+	
 	public void setMin_req(String min_req) {
 		setMin_req(Integer.parseInt(min_req));
 	}
-
-
+	
 	/**
 	 * @return the remaining tour offering capacity.
 	 */
@@ -184,12 +187,11 @@ public class Booking {
 	public void setRemaining_cap(int remaining_cap) {
 		this.remaining_cap = remaining_cap;
 	}
-
+	
 	public void setRemaining_cap(String remaining_cap) {
 		this.remaining_cap = Integer.parseInt(remaining_cap);
 	}
-
-
+	
 	/**
 	 * @return the tour offering's status.
 	 */
@@ -205,14 +207,14 @@ public class Booking {
 			return BookingStatus.CANCELLED;
 		}
 	}
-
+	
 	/**
 	 * @param status the tour offering's status to set.
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
 	public void setStatus(BookingStatus status) {
 		if(status.ordinal() == BookingStatus.CONFIRMED.ordinal()) {
 			setStatus("confirmed");
@@ -223,6 +225,15 @@ public class Booking {
 		}
 	}
 
+	
+	public void setHas_promotion(boolean has_promotion) {
+		this.has_promotion = has_promotion;
+	}
+	
+	public boolean getHas_promotion() {
+		return has_promotion;
+	}
+	
 	/**
 	 * @return the number of search hits.
 	 */

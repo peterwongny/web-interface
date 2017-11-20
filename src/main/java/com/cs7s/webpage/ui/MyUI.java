@@ -10,6 +10,7 @@ import com.cs7s.webpage.authentication.BasicAccessControl;
 import com.cs7s.webpage.authentication.LoginScreen;
 import com.cs7s.webpage.database.BookingRepository;
 import com.cs7s.webpage.database.CustomerRepository;
+import com.cs7s.webpage.database.PromotionRepository;
 import com.cs7s.webpage.database.StaffLoginRepository;
 import com.cs7s.webpage.database.TourRepository;
 import com.cs7s.webpage.database.UnansweredEnquiriesRepository;
@@ -54,6 +55,12 @@ public class MyUI extends UI {
 	 */
 	@Autowired
 	private StaffLoginRepository staffLoginRepo;
+	
+	/**
+	 * The promotions repository.
+	 */
+	@Autowired
+	public PromotionRepository promoRepo;
 
 	/**
 	 * The unanswered enquiries repository.

@@ -2,18 +2,30 @@ package com.cs7s.webpage.ui.bookingTable;
 
 import com.cs7s.webpage.database.Booking;
 import com.cs7s.webpage.database.BookingRepository;
-
+import com.cs7s.webpage.database.BookingStatus;
+import com.cs7s.webpage.database.Customer;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
+import org.vaadin.gridutil.cell.CellFilterComponent;
 import org.vaadin.gridutil.cell.GridCellFilter;
 
 /**
@@ -69,6 +81,9 @@ public class BookingView extends Panel implements View {
 		filter.setTextFilter("tour_guide_line_acc", true, false);
 		filter.setNumberFilter("hits", Integer.class);
 
+		CellFilterComponent<ComboBox<BookingStatus>> statusFilter = filter.setComboBoxFilter("status", BookingStatus.class, 
+				Arrays.asList(BookingStatus.CONFIRMED, BookingStatus.NOT_CONFIRMED, BookingStatus.CANCELLED));
+
 		Button addBookingBtn = new Button("Add new booking");
 		addBookingBtn.addClickListener(e -> {
 			grid.asSingleSelect().clear();
@@ -123,16 +138,69 @@ public class BookingView extends Panel implements View {
 	 * @param booking the booking entity to be saved.
 	 */
 	public void save(Booking booking) {
-//		if (booking.getStatus() != BookingStatus.NOT_CONFIRMED) {
-//			List<Booking> q = bookingRepo.findByBookingId(booking.getBooking_id());
-//			if (q.isEmpty()||q.get(0).getStatus() != BookingStatus.NOT_CONFIRMED) {
-//				//do nothing
-//			}
-//			else {
-//				UpdateCustomer up = new UpdateCustomer(booking, customerRepo);
-//				up.update();
-//			}
-//		}
+		if (booking.getStatus() != BookingStatus.NOT_CONFIRMED) {
+			Booking q = bookingRepo.findById(booking.getBooking_id());
+			if (q==null||q.getStatus() != BookingStatus.NOT_CONFIRMED) {
+				//do nothing
+			}
+			else if (q.getStatus() == BookingStatus.CANCELLED){
+//				try {
+//					String response = null;
+//			    	String stringUrl = "https://api.line.me/v2/bot/message/multicast";
+//			    	stringUrl = stringUrl.replaceAll(" ", "%20");
+//			    	URL url = new URL(stringUrl);
+//			    	JsonObject params = new JsonObject();
+//			    	
+//			    	List<Customer> customers = customerRepo.findAll();
+//			    	String[] stringLineIds = new String[customers.size()];
+//			    	for(int i = 0; i < customers.size(); i++) {
+//			    		stringLineIds[i]=customers.get(i).getLine_id();
+//			    		System.out.println(stringLineIds[i]);
+//			    	}
+//			    	JsonArray lineIds = new JsonArray();
+//			        for (String id : stringLineIds) {
+//			            lineIds.add(new JsonPrimitive(id));
+//			        }
+//			    	JsonObject message = new JsonObject();
+//			    	message.addProperty("type","text");
+//			    	message.addProperty("text",promo.getDescription());
+//			    	JsonArray messages = new JsonArray();
+//			    	messages.add(message);
+//			    	params.add("to", lineIds);
+//			    	params.add("messages", messages);
+//			        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//			        conn.setRequestMethod("POST");
+//			        conn.setRequestProperty("Authorization", 
+//			        		"Bearer 0KyopSNQN0FQIb4cQ8wnk84exJHoeR4MPhQB1TU8kTz89vZFjH"
+//			        		+ "P5x5r33TDfMpyu9iFfBv3yH3l5NoWJREQvSvaxAGXRG8rW0uGvF"
+//			        		+ "Bn2IXPTts0zK+CnQmwDK5n2Qw4576y6/kNKU16DNuz7cXai2AdB0"
+//			        		+ "4t89/1O/w1cDnyilFU=");
+//			        conn.setRequestProperty("Content-Type", 
+//			        		"application/json");
+//			        conn.setDoOutput(true);
+//			        conn.setDoInput(true);
+//			        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+//			        os.writeBytes(params.toString()); 
+//			        os.flush();
+//			        os.close();
+//			        BufferedReader in = new BufferedReader(
+//			        		new InputStreamReader(conn.getInputStream()));
+//			        String inputLine;
+//			        StringBuffer sb = new StringBuffer();
+//			        while ((inputLine = in.readLine()) != null) {
+//			            sb.append(inputLine);
+//			        }
+//			        in.close();
+//			        response = sb.toString();
+//			        System.out.println("POST RESPONSE "+response);
+//				} catch (Exception e) {
+//					System.out.println("EXCEPTION FOR POST "+ e.toString());
+//				}
+			}
+			else {
+				
+			}
+		}
 		bookingRepo.saveAndFlush(booking);
 		updateList();
 	}

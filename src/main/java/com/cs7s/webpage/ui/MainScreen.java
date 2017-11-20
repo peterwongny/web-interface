@@ -57,7 +57,8 @@ public class MainScreen extends HorizontalLayout {
         menu.addView(new UnansweredEnquiriesView(ui.unRepo), UnansweredEnquiriesView.VIEW_NAME,
         		UnansweredEnquiriesView.VIEW_NAME, FontAwesome.EDIT);
         
-        menu.addView(new PromotionView(), PromotionView.VIEW_NAME,
+        menu.addView(new PromotionView(ui.promoRepo, ui.bookingRepo,
+        		ui.customerRepo), PromotionView.VIEW_NAME,
                 PromotionView.VIEW_NAME, FontAwesome.EDIT);
         
         menu.addView(new ReportView(ui.bookingRepo, ui.tourRepo), ReportView.VIEW_NAME,

@@ -16,6 +16,7 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 @SuppressWarnings("serial")
 public class CustomerForm extends FormLayout {
+
 	private TextField name = new TextField("Name");
 	private TextField cust_id = new TextField("Customer ID");
 	private TextField line_id = new TextField("LINE ID");
@@ -45,8 +46,10 @@ public class CustomerForm extends FormLayout {
 		this.customerView = customerView;
 
 		setSizeUndefined();
+
 		HorizontalLayout buttons = new HorizontalLayout(save, close);
 		HorizontalLayout row1 = new HorizontalLayout(name, cust_id, line_id, phone, age);
+
 		HorizontalLayout row2 = new HorizontalLayout(tour_joined, adult_num, children_num, toddler_num);
 		HorizontalLayout row3 = new HorizontalLayout(fee, amt_paid, special_req);
 		addComponents(row1, row2, row3, buttons);

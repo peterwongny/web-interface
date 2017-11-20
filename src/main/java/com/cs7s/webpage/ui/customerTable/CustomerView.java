@@ -50,12 +50,16 @@ public class CustomerView extends Panel implements View {
 		customerTable = customerRepo.findAll();
 		provider = new ListDataProvider<>(customerRepo.findAll());
 		grid.setDataProvider(provider);
-		grid.setColumnOrder("name", "cust_id", "line_id", "phone", "age", "tour_joined", "adult_num", "children_num", "toddler_num", "fee", "amt_paid", "special_req");
+
+		grid.setColumnOrder("name", "cust_id", "line_id", "phone",
+				"age", "tour_joined", "adult_num", "children_num",
+				"toddler_num", "fee", "amt_paid", "special_req");
 		updateList();
 
 		// Filter
 		final GridCellFilter<Customer> filter = new GridCellFilter<>(this.grid, Customer.class);
 		filter.setTextFilter("name", true, false);
+
 		filter.setTextFilter("cust_id",true,false);
 		filter.setTextFilter("line_id", true, false);
 		filter.setTextFilter("phone", true, false);

@@ -17,6 +17,8 @@ import javax.persistence.Column;
 @Entity // Refers to the type of record in a table.
 @Table(name = "customer_table")
 public class Customer {
+
+	
 	@Column(name = "id")
 	@GeneratedValue(generator = "UUID")
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -74,20 +76,6 @@ public class Customer {
 	}
 
 	/**
-	 * @return the customer ID.
-	 */
-	public String getCust_id() {
-		return cust_id;
-	}
-
-	/**
-	 * @param cust_id the customer ID to set.
-	 */
-	public void setCust_id(String cust_id) {
-		this.cust_id = cust_id;
-	}
-	
-	/**
 	 * @return the customer's LINE ID.
 	 */
 	public String getLine_id() {
@@ -99,6 +87,20 @@ public class Customer {
 	 */
 	public void setLine_id(String line_id) {
 		this.line_id = line_id;
+	}
+	
+	/**
+	 * @return the cust_id
+	 */
+	public String getCust_id() {
+		return cust_id;
+	}
+
+	/**
+	 * @param cust_id the cust_id to set
+	 */
+	public void setCust_id(String cust_id) {
+		this.cust_id = cust_id;
 	}
 
 	/**
